@@ -1,0 +1,16 @@
+{
+  "name": "riu-reservation-system",
+  "version": "1.0.0",
+  "description": "A simple system for setting and managing dinner reservations",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm start",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  }
+}

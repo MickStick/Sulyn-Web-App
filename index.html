@@ -1,0 +1,167 @@
+<!--
+An app for hotel Riu Palace Jamaica where the 
+guest can make dinner reservations. 
+The app should be able to do the following:
+ 
+If it’s being used by a guest:
+•	Enter name 
+•	Room number 
+•	Number of persons 
+•	Select which restaurant (steak house, 
+	bamboo, dolce vita and kulinarium)
+•	A virtual seating arrangement so that 
+	the guest can select where to sit (minimum of 2 seats 
+	and maximum of 4 seats)
+•	Time of dinner
+•	An alarm to remind them 1 hour before dinner 
+•	Option to cancel reservation
+•	Date of dinner
+•	Option to change time of dinner, if its available 
+
+If it’s being used by the hostess:
+•	Enter guest room number to verify their reservation.
+•	Hostess can see where the guest chooses to sit.
+•	the time of the dinner 
+•	number of persons
+
+Guests:
+	Both will be forms
+	!!! Ask her how the seating arrangements are - assumption not viable.
+	Is there a specific range for the dinners? Such as midday to midnight? 4 to midnight?
+
+Hostess:
+	No issues yet.
+
+
+ -->
+
+ <!doctype html>
+ <html lang="en">
+	<head>
+		<title> RUI RS</title>
+		<meta charset="utf-8">
+		<meta name="view-point" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<link rel="stylesheet" href="./css/style.css"/>
+		<script
+			src="https://code.jquery.com/jquery-3.2.1.min.js"
+			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			crossorigin="anonymous">
+</script>
+		<script language="javascript" src="./js/script.js"></script>
+	</head>
+	
+	<body>
+		<header class="page-header">
+			<img src="" alt=""/>
+			<h1>RIU Jamaica</h1>
+			<nav class="navbar">
+				<ul class="nav-routes">
+					<li class="route-item">
+						<a class="route" href="/home">Home</a>
+					</li>
+					<li class="route-item log-route">
+						<a class="route" href="/login">Login</a>
+					</li>
+					<li class="route-item log-route">
+						<a class="route" href="/guests">Reserve Seat</a>
+					</li>
+					<li hidden class="route-item host-route">
+						<a class="route" href="/hostess">Manage Reservations</a>
+					</li>
+					<li hidden class="route-item host-route">
+						<a class="route" href="/logout">Logout</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		
+		<div class="container">
+			<!-- Home View Container -->
+			<div hidden class="home view" id="home">
+				<h1>RIU Jamaica Reservation System</h1>
+				<p> Welome To the RUI Jamaica Resorts Reservation system. Choose when, choose where then just walk in. </p>
+			</div>
+			<!-- Home View Container -->
+
+			<!-- Login View Container -->
+			<div hidden class="login view" id="login">
+				<form class="login-form site-form">
+					<label> Login </label>
+					<table>
+						<tr><td><label>Username</label></td></tr>
+						<tr><td><input type="text" name="uname" placeholder="doeboy"/></td></tr>
+						<tr><td><label>Password</label></td></tr>
+						<tr><td><input type="password" name="pword" placeholder="********"/></td></tr>
+						<tr><td><label id="loginErr"></label></td></tr>
+					</table>
+					<button type="submit" id="login-btn">Login</button>
+				</form>
+			</div>
+			<!-- Login View Container -->
+
+			<!-- Guest Reservation View Container -->
+			<div hidden class="guests view" id="guests">
+				<form class="guest-form site-form">
+					<label> Set Reservations </label>
+					<table>
+						<tr><td><label>Guest Name</label></td></tr>
+						<tr><td><input type="text" name="name" placeholder="John Doe"/></td></tr>
+						<tr><td><label>Time</label></td></tr>
+						<tr><td><input type="text" name="time" placeholder="This would be a time picker"/></td></tr>
+						<tr><td><label>Date</label></td></tr>
+						<tr><td><input type="text" name="date" placeholder="This would be a Date picker"/></td></tr>
+						<tr><td><label>Select Seating</label></td></tr>
+						<tr><td><input type="text" name="seat" placeholder="I'm guessing a gui seat selection"/></td></tr>
+					</table>
+					<button type="submit" id="guest-btn">Set Reservation</button>
+				</form>
+			</div>
+			<!-- Guest Reservation View Container -->
+
+			<!-- Reservation Confirmation View Container -->
+			<div hidden class="resConfirm view" id="resConfirm">
+				<label>Confirmed</label>
+				<table class="resConfirm-table">
+					<tr><td><label>Reservation Number: </label></td><td><label id="resNum"></label></td></tr>
+					<tr><td><label>Customer Name: </label></td><td><label id="resName"></label></td></tr>
+					<tr><td><label>Requested Time: </label></td><td><label id="resTime"></label></td></tr>
+					<tr><td><label>Requested Date: </label></td><td><label id="resDate"></label></td></tr>
+					<tr><td><label>Requested Seat: </label></td><td><label id="resSeat"></label></td></tr>
+				</table>
+				<a class="route" href="/home">Done</a>
+			</div>
+			<!-- Reservation Confirmation View Container -->
+
+			<!-- Find Reservation View Container -->
+			<div hidden class="hostess view" id="hostess">
+				<h1 id="hostess-name">Welcome </h1>
+				<form class="hostess-form site-form">
+					<label> Manage Reservations </label>
+					<table>
+						<tr><td><label>Guest Name</label></td></tr>
+						<tr><td><input type="text" name="name" placeholder="John Doe"/></td></tr>
+						<tr><td><label>Reservation Ticket</label></td></tr>
+						<tr><td><input type="text" name="ticket" placeholder="123456"/></td></tr>
+						<tr><td><label id="resErr"></label></td></tr>
+					</table>
+					<button type="submit" id="host-btn">Find Reservation</button>
+				</form>
+			</div>
+			<!-- Find Reservation View Container -->
+
+			<!-- Retreived Reservation View Container -->
+			<div hidden class="reservation view" id="reservation">
+				<label>Reservation </label>
+				<table class="reserve-table">
+					<tr><td><label>Customer Name: </label></td><td><label id="resName"></label></td></tr>
+					<tr><td><label>Requested Time: </label></td><td><label id="resTime"></label></td></tr>
+					<tr><td><label>Requested Date: </label></td><td><label id="resDate"></label></td></tr>
+					<tr><td><label>Requested Seat: </label></td><td><label id="resSeat"></label></td></tr>
+				</table>
+				<a class="route" href="/home">Done</a>
+			</div>
+			<!-- Retreived Reservation View Container -->
+		</div>
+	</body>
+ </html>
+ 
