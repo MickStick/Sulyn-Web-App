@@ -42,6 +42,8 @@ The front-end is made with **HTML5**, **CSS3**, **JavaScript** and **JQuery**. *
 
 > In the terminal run code "npm install"
 
+> In the terminal run code "npm start" to start the server
+
 > Enjoy
 
 ### Read More
