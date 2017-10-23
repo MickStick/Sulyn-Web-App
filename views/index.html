@@ -46,7 +46,7 @@ Hostess:
 			src="https://code.jquery.com/jquery-3.2.1.min.js"
 			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 			crossorigin="anonymous">
-</script>
+		</script>
 		<script language="javascript" src="./js/script.js"></script>
 	</head>
 	
@@ -106,12 +106,33 @@ Hostess:
 					<table>
 						<tr><td><label>Guest Name</label></td></tr>
 						<tr><td><input type="text" name="name" placeholder="John Doe"/></td></tr>
+						<tr><td><label>Room Number</label></td></tr>
+						<tr><td><input type="text" name="rNum" placeholder="XXX"/></td></tr>
+						<tr><td><label>Number of Guests</label></td></tr>
+						<tr><td><input type="number" name="gNum" placeholder="XXX"/></td></tr>
+						<tr><td><label>Choose Restaurant</label></td></tr>
+						<tr><td>
+							<select name="restaurants" id="">
+								<option value="null"></option>
+								<option value="Steak House">Steak House</option>
+								<option value="Bamboo">Bamboo</option>
+								<option value="Dulce Vita">Dulce Vita</option>
+								<option value="Kulinarium">Kulinarium</option>
+							</select>
+						</td></tr>
 						<tr><td><label>Time</label></td></tr>
-						<tr><td><input type="text" name="time" placeholder="This would be a time picker"/></td></tr>
+						<tr><td><input 
+							type="time" 
+							name="time" 
+							min="18:30"
+							max="21:00"
+							value="18:30"/></td></tr>
 						<tr><td><label>Date</label></td></tr>
-						<tr><td><input type="text" name="date" placeholder="This would be a Date picker"/></td></tr>
+						<tr><td><input type="date" name="date" placeholder="This would be a Date picker"/></td></tr>
 						<tr><td><label>Select Seating</label></td></tr>
 						<tr><td><input type="text" name="seat" placeholder="I'm guessing a gui seat selection"/></td></tr>
+						<tr><td><label>Email</label></td></tr>
+						<tr><td><input type="email" name="email" placeholder="exam@ple.com"/></td></tr>
 					</table>
 					<button type="submit" id="guest-btn">Set Reservation</button>
 				</form>
@@ -124,9 +145,13 @@ Hostess:
 				<table class="resConfirm-table">
 					<tr><td><label>Reservation Number: </label></td><td><label id="resNum"></label></td></tr>
 					<tr><td><label>Customer Name: </label></td><td><label id="resName"></label></td></tr>
+					<tr><td><label>Customer Room: </label></td><td><label id="resrNum"></label></td></tr>
+					<tr><td><label>Number of Guests: </label></td><td><label id="resgNum"></label></td></tr>
+					<tr><td><label>Restaurant: </label></td><td><label id="resRest"></label></td></tr>
 					<tr><td><label>Requested Time: </label></td><td><label id="resTime"></label></td></tr>
 					<tr><td><label>Requested Date: </label></td><td><label id="resDate"></label></td></tr>
 					<tr><td><label>Requested Seat: </label></td><td><label id="resSeat"></label></td></tr>
+					<tr><td><label>Customer Email: </label></td><td><label id="resEmail"></label></td></tr>
 				</table>
 				<a class="route" href="/home">Done</a>
 			</div>
