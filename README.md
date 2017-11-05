@@ -44,6 +44,8 @@ The front-end is made with **HTML5**, **CSS3**, **JavaScript** and **JQuery**. *
 
 > In the terminal run code "npm start" to start the server
 
+> In your browser, goto http://localhost:8888/
+
 > Enjoy
 
 ### Read More

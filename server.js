@@ -76,8 +76,9 @@ app.post('/getreserve', urlcp, function(req, res, next) {
     });
 });
 
+
 app.get('*', function(req, res, next) {
-    res.render('index', { name: "Solar Flare" });
+    res.render('index', { name: "Solar-Monkey-Flare" });
     //res.sendFile(path.join(__dirname, '/index.html', {name: "Solar Flare"}));
 });
 

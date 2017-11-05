@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    
     console.log(window.location);
     const users = [{
             name: "Mikhail Shaw",
@@ -13,7 +14,7 @@ $(document).ready(function() {
             password: "pavt3c"
         }
     ];
-
+ 
 
     checkStat = () => {
         if (localStorage.getItem("status") != undefined) {
