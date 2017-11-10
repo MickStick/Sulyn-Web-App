@@ -39,30 +39,14 @@ Hostess:
  <!doctype html>
  <html lang="en">
 	<head>
-		<title> RIU RS</title>
+		<title> RIU RP</title>
 		<meta charset="utf-8">
 		<meta name="view-point" content="width=device-width, initial-scale=1.0">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 		<link rel="stylesheet" href="./css/style.css"/>
 		<link rel="shortcut icon" href="favicon.ico" />
-		<script>
-
-			/*////// Checks the url for multiple slashes and turns the to hyphens then the ///////
-			//////// first hyphen back to a slash so the redirect code will work for all routes //
-			//////// used in this code /////////////////////////////////////////////////////////// */
-			// var count;
-			// if((count = (window.location.pathname.match(/\//g) || []).length) <= 1){
-			// 	//alert("no second /");
-			// }else if((count = (window.location.pathname.match(/-/g) || []).length) < 1){
-			// 	path = window.location.pathname.replace(/\//g,"-");
-			// 	window.location.pathname = path.replace("-","/");
-			// }
-			if(window.location.pathname == "/guest/seatup-update" || window.location.pathname == "/guests/seatupd"){
-				window.location.pathname = "/guests";
-        }
-			
-		</script>
+		
 
 		<!-- SCRIPTS -->
 		<!--<script
@@ -119,12 +103,15 @@ Hostess:
 				</div>
 				
 			</nav>
+			<div class="progress" id="progress" style="margin-top: 0 !important;">
+			<div class="indeterminate red"></div>
+			</div>
 		</header>
 		
 		<div class="container red-text">
 			<!-- Home View Container -->
 			<div hidden class="home view" id="home">
-				<h1 class="center">RIU Jamaica Reservation System</h1>
+				<h1 class="center">RIU Jamaica Reservation Portal</h1>
 				<p class="center flow-text"> Welome To the RUI Jamaica Resorts Reservation system. Choose when, choose where then just walk in. </p>
 			</div>
 			<!-- Home View Container -->
@@ -214,7 +201,7 @@ Hostess:
 						<input hidden type="text" name="seat" />
 						<h6 class="black-text" style="font-size: 20px !important;">You Chose Table: <span id="table"></span></h6>
 						<!-- Seat Picker Trigger -->
-						<a class="waves-effect waves-light btn amber modal-trigger black-text" href="#modal1"> Choose A Table</a>
+						<a class="waves-effect waves-light btn-flat amber modal-trigger black-text" href="#modal1"> Choose A Table</a>
 
 						<!-- Seat Picker Structure -->
 						<div id="modal1" class="modal">
@@ -254,12 +241,12 @@ Hostess:
 					<br>
 					<div class="input-field">
 						
-						<input type="email" name="email" placeholder="exam@ple.com"/>
+						<input required type="email" class="validate" name="email" placeholder="exam@ple.com"/>
 						<label for="email">Email</label>
 
 					</div> <br>
-					<a href="/guests-seatupd" class="route left">Change seat on previous reservation</a>
-					<button class="btn red right" type="submit" id="guest-btn">Set Reservation</button>
+					<a href="/guests-seatupd" class="route btn-floating btn red right" title="Edit previous reservation table"><i class="large material-icons">mode_edit</i></a>
+					<button class="btn red left" type="submit" id="guest-btn">Set Reservation</button>
 					<div class="clearfix"></div>
 				</form>
 				<br><br>
@@ -391,6 +378,31 @@ Hostess:
 			</div>
 			<!-- Retreived Reservation View Container -->
 		</div>
+
+
+
+		<script>
+
+			/*////// Checks the url for multiple slashes and turns the to hyphens then the ///////
+			//////// first hyphen back to a slash so the redirect code will work for all routes //
+			//////// used in this code /////////////////////////////////////////////////////////// */
+			// var count;
+			// if((count = (window.location.pathname.match(/\//g) || []).length) <= 1){
+			// 	//alert("no second /");
+			// }else if((count = (window.location.pathname.match(/-/g) || []).length) < 1){
+			// 	path = window.location.pathname.replace(/\//g,"-");
+			// 	window.location.pathname = path.replace("-","/");
+			// }
+			var preloader = document.getElementById("progress");
+			window.addEventListener("load", function(){
+				preloader.style.display = "none";
+			});
+
+			if(window.location.pathname == "/guest/seatup-update" || window.location.pathname == "/guests/seatupd"){
+				window.location.pathname = "/guests";
+        }
+			
+		</script>
 	</body>
  </html>
  

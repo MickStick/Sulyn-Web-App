@@ -177,11 +177,16 @@ $(document).ready(function() {
 
     $('.route').click(function(e) {
         e.preventDefault();
+        $('.progress').css({"display":"block"});
         if ($(this).attr("href") == "/logout") {
             onLogout();
         } else {
             setHidden();
             getView($(this).attr("href"));
+        }
+        console.log("View: ",$(this).attr("href").replace("/","#"));
+        if($(''+$(this).attr("href").replace("/","#")).attr("hidden") == undefined){
+            $('.progress').css({"display":"none"});
         }
     });
 
@@ -291,6 +296,7 @@ $(document).ready(function() {
             }
         });
     });
+
 
     $('.guest-form input[name="date"]').blur(function() {
         console.log("date blurred");
