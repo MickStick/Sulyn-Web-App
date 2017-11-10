@@ -5,3 +5,57 @@
 #resErr {
     color: red;
 }
+
+input::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: black;
+}
+
+input::-moz-placeholder {
+    /* Firefox 19+ */
+    color: black;
+}
+
+input:-ms-input-placeholder {
+    /* IE 10+ */
+    color: black;
+}
+
+input:-moz-placeholder {
+    /* Firefox 18- */
+    color: black;
+}
+
+input:focus {
+    border-color: darkblue !important;
+}
+
+input:focus~label {
+    color: #0033cc !important;
+}
+
+.s1 {
+    margin: 0mm 6.5mm !important;
+}
+
+.row {
+    width: 50% !important;
+    margin: 2mm auto !important;
+}
+
+.r2 {
+    width: 40% !important;
+}
+
+.seat:focus {
+    background: teal !important;
+    background-color: teal !important;
+}
+
+.input-field label {
+    font-size: 18px !important;
+}
+
+tbody label {
+    font-size: 18px !important;
+}

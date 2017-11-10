@@ -39,24 +39,28 @@ Hostess:
  <!doctype html>
  <html lang="en">
 	<head>
-		<title> RUI RS</title>
+		<title> RIU RS</title>
 		<meta charset="utf-8">
-		<meta name="view-point" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta name="view-point" content="width=device-width, initial-scale=1.0">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 		<link rel="stylesheet" href="./css/style.css"/>
+		<link rel="shortcut icon" href="favicon.ico" />
 		<script>
 
 			/*////// Checks the url for multiple slashes and turns the to hyphens then the ///////
 			//////// first hyphen back to a slash so the redirect code will work for all routes //
 			//////// used in this code /////////////////////////////////////////////////////////// */
-			var count;
-			if((count = (window.location.pathname.match(/\//g) || []).length) <= 1){
-				//alert("no second /");
-			}else if((count = (window.location.pathname.match(/-/g) || []).length) < 1){
-				path = window.location.pathname.replace(/\//g,"-");
-				window.location.pathname = path.replace("-","/");
-			}
+			// var count;
+			// if((count = (window.location.pathname.match(/\//g) || []).length) <= 1){
+			// 	//alert("no second /");
+			// }else if((count = (window.location.pathname.match(/-/g) || []).length) < 1){
+			// 	path = window.location.pathname.replace(/\//g,"-");
+			// 	window.location.pathname = path.replace("-","/");
+			// }
+			if(window.location.pathname == "/guest/seatup-update" || window.location.pathname == "/guests/seatupd"){
+				window.location.pathname = "/guests";
+        }
 			
 		</script>
 
@@ -72,44 +76,44 @@ Hostess:
 	
 	</head>
 	
-	<body>
+	<body class="blue lighten-3">
 		<header class="page-header">
-			<nav class="navbar">
+			<nav class="navbar red">
 				<div class="nav-wrapper">
-					<a href="/home" class="brand-logo route"> RIU Jamaica</a>
-					<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>	
+					<a href="/home" class="brand-logo route amber-text"> RIU Jamaica</a>
+					<a href="#" data-activates="mobile-demo" class="button-collapse amber-text"><i class="material-icons">menu</i></a>	
 					<ul class="nav-routes right hide-on-med-and-down">
 						<li class="route-item">
-							<a class="route" href="/home">Home</a>
+							<a class="route amber-text" href="/home">Home</a>
 						</li>
 						<li class="route-item log-route">
-							<a class="route" href="/login">Login</a>
+							<a class="route amber-text" href="/login">Login</a>
 						</li>
 						<li class="route-item log-route">
-							<a class="route" href="/guests">Reserve Seat</a>
+							<a class="route amber-text" href="/guests">Reserve Seat</a>
 						</li>
 						<li hidden class="route-item host-route">
-							<a class="route" href="/hostess">Manage Reservations</a>
+							<a class="route amber-text" href="/hostess">Manage Reservations</a>
 						</li>
 						<li hidden class="route-item host-route">
-							<a class="route" href="/logout">Logout</a>
+							<a class="route amber-text" href="/logout">Logout</a>
 						</li>
 					</ul>	
-					<ul class="nav-routes side-nav" id="mobile-demo">
+					<ul class="nav-routes side-nav red" id="mobile-demo">
 						<li class="route-item">
-							<a class="route" href="/home">Home</a>
+							<a class="route amber-text" href="/home">Home</a>
 						</li>
 						<li class="route-item log-route">
-							<a class="route" href="/login">Login</a>
+							<a class="route amber-text" href="/login">Login</a>
 						</li>
 						<li class="route-item log-route">
-							<a class="route" href="/guests">Reserve Seat</a>
+							<a class="route amber-text" href="/guests">Reserve Seat</a>
 						</li>
 						<li hidden class="route-item host-route">
-							<a class="route" href="/hostess">Manage Reservations</a>
+							<a class="route amber-text" href="/hostess">Manage Reservations</a>
 						</li>
 						<li hidden class="route-item host-route">
-							<a class="route" href="/logout">Logout</a>
+							<a class="route amber-text" href="/logout">Logout</a>
 						</li>
 					</ul>				
 				</div>
@@ -117,26 +121,34 @@ Hostess:
 			</nav>
 		</header>
 		
-		<div class="container">
+		<div class="container red-text">
 			<!-- Home View Container -->
 			<div hidden class="home view" id="home">
-				<h1>RIU Jamaica Reservation System</h1>
-				<p> Welome To the RUI Jamaica Resorts Reservation system. Choose when, choose where then just walk in. </p>
+				<h1 class="center">RIU Jamaica Reservation System</h1>
+				<p class="center flow-text"> Welome To the RUI Jamaica Resorts Reservation system. Choose when, choose where then just walk in. </p>
 			</div>
 			<!-- Home View Container -->
 
 			<!-- Login View Container -->
 			<div hidden class="login view" id="login">
 				<form class="login-form site-form">
-					<label> Login </label>
-					<table>
-						<tr><td><label>Username</label></td></tr>
-						<tr><td><input type="text" name="uname" placeholder="doeboy"/></td></tr>
-						<tr><td><label>Password</label></td></tr>
-						<tr><td><input type="password" name="pword" placeholder="********"/></td></tr>
-						<tr><td><label id="loginErr"></label></td></tr>
-					</table>
-					<button type="submit" id="login-btn">Login</button>
+					<h4> Login </h4>
+					<br>
+					<div class="input-field">
+						
+						<input type="text" name="uname" placeholder="doeboy"/>
+						<label for="uname">Username</label>
+
+					</div>
+					<div class="input-field">
+						
+						<input type="password" name="pword" placeholder="********"/>
+						<label for="pword">Password</label>
+					</div>
+					<br>
+					<div><label id="loginErr"></label></div>
+					
+					<button class="btn red waves-effect" type="submit" id="login-btn">Login</button>
 				</form>
 			</div>
 			<!-- Login View Container -->
@@ -144,100 +156,241 @@ Hostess:
 			<!-- Guest Reservation View Container -->
 			<div hidden class="guests view" id="guests">
 				<form class="guest-form site-form">
-					<label> Set Reservations </label>
-					<table>
-						<tr><td><label>Guest Name</label></td></tr>
-						<tr><td><input type="text" name="name" placeholder="John Doe"/></td></tr>
-						<tr><td><label>Room Number</label></td></tr>
-						<tr><td><input type="text" name="rNum" placeholder="XXX"/></td></tr>
-						<tr><td><label>Number of Guests</label></td></tr>
-						<tr><td><input type="number" name="gNum" placeholder="XXX"/></td></tr>
-						<tr><td><label>Choose Restaurant</label></td></tr>
-						<tr><td>
-							<select name="restaurants" id="">
-								<option value="null"></option>
-								<option value="Steak House">Steak House</option>
-								<option value="Bamboo">Bamboo</option>
-								<option value="Dulce Vita">Dulce Vita</option>
-								<option value="Kulinarium">Kulinarium</option>
-							</select>
-						</td></tr>
-						<tr><td><label>Time</label></td></tr>
-						<tr><td><input 
+					<h4> Set Reservations </h4>
+					<br>
+					<div class="input-field">
+						
+						<input type="text" name="name" placeholder="John Doe"/>
+						<label for="name">Guest Name</label>
+
+					</div>
+					<div class="input-field">
+						
+						<input type="text" name="rNum" placeholder="XXX"/>
+						<label for="rNum">Room Number</label>
+
+					</div>
+					<div class="input-field">
+						
+						<input type="number" name="gNum" placeholder="XXX"/>
+						<label for="gNum">Number of Guests</label>
+
+					</div>
+					<!-- <div class="input-field">
+						<label for="restaurants">Choose Restaurant</label>
+						<select name="restaurants" id="">
+							<option value="null"></option>
+							<option value="Steak House">Steak House</option>
+							<option value="Bamboo">Bamboo</option>
+							<option value="Dulce Vita">Dulce Vita</option>
+							<option value="Kulinarium">Kulinarium</option>
+						</select>
+					</div>
+					<br> -->
+					<div class="input-field">
+						<label for="timepicker_ampm_dark ">Choose Reservation Time</label>
+					</div>
+					<br>
+					<div class="input-field">
+						<!-- <label for"time">Time</label> -->
+						<!-- <input 
 							type="time" 
 							name="time" 
 							min="18:30"
 							max="21:00"
-							value="18:30"/></td></tr>
-						<tr><td><label>Date</label></td></tr>
-						<tr><td><input type="date" name="date" placeholder="This would be a Date picker"/></td></tr>
-						<tr><td><label>Select Seating</label></td></tr>
-						<tr><td><input type="text" name="seat" placeholder="I'm guessing a gui seat selection"/></td></tr>
-						<tr><td><label>Email</label></td></tr>
-						<tr><td><input type="email" name="email" placeholder="exam@ple.com"/></td></tr>
-					</table>
-					<a href="/guests-seatupd" class="route">Change seat on previous reservation</a>
-					<button type="submit" id="guest-btn">Set Reservation</button>
+							value="18:30"/> -->
+						<!-- <label for="timepicker_ampm_dark " style="color: black !important;">Click To Choose Time.</label> -->
+                        <input id="timepicker_ampm_dark" class="timepicker" type="time" name="time" 
+							min="18:30"
+							max="21:00"
+							value="18:30">
+					</div>
+					<div class="input-field">
+						<!-- <label for="date">Date</label> -->
+						<input type="date" name="date" placeholder="Click To Choose Reservation Date." class="datepicker"/>
+					</div>
+					<div class="input-field">
+						
+						<input hidden type="text" name="seat" />
+						<h6 class="black-text" style="font-size: 20px !important;">You Chose Table: <span id="table"></span></h6>
+						<!-- Seat Picker Trigger -->
+						<a class="waves-effect waves-light btn amber modal-trigger black-text" href="#modal1"> Choose A Table</a>
+
+						<!-- Seat Picker Structure -->
+						<div id="modal1" class="modal">
+							<div class="modal-content">
+							<h4 class="center">Choose A Table</h4>
+							<br>
+								<div>
+									<div class="row">
+										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="4 Seats">8</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats">9</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats" style="padding-left: 6.5mm !important; padding-right: 6.5mm !important;">10</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="4 Seats" style="padding-left: 6.5mm !important; padding-right: 6.5mm !important;">11</button></div>
+									</div>
+									<br>
+									<div class="row r2" >
+										<!-- <div class="col s1"><button class="btn-flat disabled orange white-text"> </button></div> -->
+										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats">5</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats">6</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats">7</button></div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="4 Seats">1</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats">2</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats">3</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="4 Seats">4</button></div>
+									</div>
+									<br>
+								</div>
+							</div>
+							<div class="modal-footer">
+							<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="seatBtn">Choose</a>
+							</div>
+						</div>
+
+					</div>
+					<br>
+					<div class="input-field">
+						
+						<input type="email" name="email" placeholder="exam@ple.com"/>
+						<label for="email">Email</label>
+
+					</div> <br>
+					<a href="/guests-seatupd" class="route left">Change seat on previous reservation</a>
+					<button class="btn red right" type="submit" id="guest-btn">Set Reservation</button>
+					<div class="clearfix"></div>
 				</form>
+				<br><br>
 			</div>
 			<!-- Guest Reservation View Container -->
 			
-			<!-- Guest Change Seat View Container -->
+			<!-- Guest Change Seat Get Reservation View Container -->
 			<div hidden class="guests/seatup view" id="guests-seatupd">
-				<h1>This is where guests change their seat</h1>
+				<form class="getSeat-form">
+					<h3>Find Your Reservation</h3>
+					<div class="input-field">
+						<input type="text" name="name" id="" placeholder="John Doe">
+						<label for="name">Guest Name</label>
+					</div>
+					<div class="input-field">
+						<input type="text" name="ticket" id="" placeholder="XXXX">
+						<label for="ticket">Reservation Ticket</label>
+					</div>
+					<div>
+						<label id="seatUpErr"></label>
+					</div>
+					<button class="btn red" id="getSeatUp-btn">Find Reservation</button>
+
+				</form>
 			</div>
+			<!-- Guest Change Seat Get Reservation View Container -->
+
 			<!-- Guest Change Seat View Container -->
+				<div hidden class="guest/seatup/update view" id="guest-seatup-update">
+					<form class="seatUp-form">
+						<p id="userGot"></p><br>
+						<div class="input-field">
+							<input hidden type="text" name="seatUp" />
+							<h6 class="black-text" style="font-size: 20px !important;">You Chose Table: <span id="tableUp"></span></h6>
+							<!-- Seat Picker Trigger -->
+							<a class="waves-effect waves-light btn amber modal-trigger black-text" href="#modal2"> Choose A Table</a>
+
+							<!-- Seat Picker Structure -->
+							<div id="modal2" class="modal">
+								<div class="modal-content">
+								<h4 class="center">Choose A Table</h4>
+								<br>
+									<div>
+										<div class="row">
+											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="4 Seats">8</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats">9</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats" style="padding-left: 6.5mm !important; padding-right: 6.5mm !important;">10</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="4 Seats" style="padding-left: 6.5mm !important; padding-right: 6.5mm !important;">11</button></div>
+										</div>
+										<br>
+										<div class="row r2" >
+											<!-- <div class="col s1"><button class="btn-flat disabled orange white-text"> </button></div> -->
+											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats">5</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats">6</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats">7</button></div>
+										</div>
+										<br>
+										<div class="row">
+											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="4 Seats">1</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats">2</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats">3</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="4 Seats">4</button></div>
+										</div>
+										<br>
+									</div>
+								</div>
+								<div class="modal-footer">
+								<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="seatUpBtn">Choose</a>
+								</div>
+							</div>
+						</div><br><br>
+						<button id="UpseatBtn" class="btn red waves-effect waves-light left">Update Seat</button>
+						<a class="btn red waves-effect waves-light right" href="guest">Cancel</a>
+						<div class="clearfix"></div>
+					</form>
+				</div>
+			<!-- Guest Change Seat View Container -->
+
 
 			<!-- Reservation Confirmation View Container -->
 			<div hidden class="resConfirm view" id="resConfirm">
-				<label>Confirmed</label>
+				<h3>Confirmed</h3>
 				<table class="resConfirm-table">
-					<tr><td><label>Reservation Number: </label></td><td><label id="resNum"></label></td></tr>
-					<tr><td><label>Customer Name: </label></td><td><label id="resName"></label></td></tr>
-					<tr><td><label>Customer Room: </label></td><td><label id="resrNum"></label></td></tr>
-					<tr><td><label>Number of Guests: </label></td><td><label id="resgNum"></label></td></tr>
-					<tr><td><label>Restaurant: </label></td><td><label id="resRest"></label></td></tr>
-					<tr><td><label>Requested Time: </label></td><td><label id="resTime"></label></td></tr>
-					<tr><td><label>Requested Date: </label></td><td><label id="resDate"></label></td></tr>
-					<tr><td><label>Requested Seat: </label></td><td><label id="resSeat"></label></td></tr>
-					<tr><td><label>Customer Email: </label></td><td><label id="resEmail"></label></td></tr>
+					<tbody><tr><td><label class="red-text">Reservation Number: </label></td><td><label id="resNum" class="red-text"></label></td></tr></tbody>
+					<tbody><tr><td><label class="red-text">Customer Name: </label></td><td><label id="resName" class="red-text"></label></td></tr></tbody>
+					<tbody><tr><td><label class="red-text">Customer Room: </label></td><td><label id="resrNum" class="red-text"></label></td></tr></tbody>
+					<tbody><tr><td><label class="red-text">Number of Guests: </label></td><td><label id="resgNum" class="red-text"></label></td></tr></tbody>
+					<tbody><tr><td><label class="red-text">Requested Time: </label></td><td><label id="resTime" class="red-text"></label></td></tr></tbody>
+					<tbody><tr><td><label class="red-text">Requested Date: </label></td><td><label id="resDate" class="red-text"></label></td></tr></tbody>
+					<tbody><tr><td><label class="red-text">Requested Table: </label></td><td><label id="resSeat" class="red-text"></label></td></tr></tbody>
+					<tbody><tr><td><label class="red-text">Customer Email: </label></td><td><label id="resEmail" class="red-text"></label></td></tr></tbody>
 				</table>
-				<a class="route" href="/home">Done</a>
+				<a class="route btn red waves-effect waves-light" href="/home">Done</a>
 			</div>
 			<!-- Reservation Confirmation View Container -->
 
 			<!-- Find Reservation View Container -->
 			<div hidden class="hostess view" id="hostess">
 				<h1 id="hostess-name">Welcome </h1>
-				<form class="hostess-form site-form">
-					<label> Manage Reservations </label>
-					<table>
-						<tr><td><label>Guest Name</label></td></tr>
-						<tr><td><input type="text" name="name" placeholder="John Doe"/></td></tr>
-						<tr><td><label>Reservation Ticket</label></td></tr>
-						<tr><td><input type="text" name="ticket" placeholder="123456"/></td></tr>
-						<tr><td><label id="resErr"></label></td></tr>
-					</table>
-					<button type="submit" id="host-btn">Find Reservation</button>
+				<form class="hostess-form">
+					<h3>Manage Reservations</h3>
+					<div class="input-field">
+						<input type="text" name="name" id="" placeholder="John Doe">
+						<label for="name">Guest Name</label>
+					</div>
+					<div class="input-field">
+						<input type="text" name="ticket" id="" placeholder="XXXX">
+						<label for="ticket">Reservation Ticket</label>
+					</div>
+					<div>
+						<label id="resErr"></label>
+					</div>
+					<button class="btn red" id="host-btn">Find Reservation</button>
+
 				</form>
 			</div>
 			<!-- Find Reservation View Container -->
 
 			<!-- Retreived Reservation View Container -->
 			<div hidden class="reservation view" id="reservation">
-				<label>Reservation </label>
+				<h3>Reservation </h3>
 				<table class="reserve-table">
-					<tr><td><label>Customer Name: </label></td><td><label id="resName"></label></td></tr>
-					<tr><td><label>Requested Time: </label></td><td><label id="resTime"></label></td></tr>
-					<tr><td><label>Requested Date: </label></td><td><label id="resDate"></label></td></tr>
-					<tr><td><label>Requested Seat: </label></td><td><label id="resSeat"></label></td></tr>
+					<tbody><tr><td><label class="red-text">Customer Name: </label></td><td><label id="resName" class="red-text"></label></td></tr></tbody>
+					<tbody><tr><td><label class="red-text">Requested Time: </label></td><td><label id="resTime" class="red-text"></label></td></tr></tbody>
+					<tbody><tr><td><label class="red-text">Requested Date: </label></td><td><label id="resDate" class="red-text"></label></td></tr></tbody>
+					<tbody><tr><td><label class="red-text">Requested Table: </label></td><td><label id="resSeat" class="red-text"></label></td></tr></tbody>
 				</table>
-				<a class="route" href="/home">Done</a>
+				<a class="route btn red waves-effect waves-light" href="/home">Done</a>
 			</div>
 			<!-- Retreived Reservation View Container -->
 		</div>
-
-		
 	</body>
  </html>
  

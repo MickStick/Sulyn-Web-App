@@ -33,7 +33,6 @@ app.post('/reserve', urlcp, function(req, res, next) {
             name: req.body.name,
             gNum: req.body.gNum,
             rNum: req.body.rNum,
-            restaurant: req.body.restaurant,
             time: req.body.time,
             date: req.body.date,
             seat: req.body.seat,
