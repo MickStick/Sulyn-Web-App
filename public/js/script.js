@@ -1,6 +1,8 @@
 $(document).ready(function() {
-    
-    console.log(window.location);
+
+    $(".button-collapse").sideNav(); //Initiaizze button for mobile menu show/hide
+
+    console.log(window.location.pathname);
     const users = [{
             name: "Mikhail Shaw",
             password: "pass4040"
@@ -14,7 +16,7 @@ $(document).ready(function() {
             password: "pavt3c"
         }
     ];
- 
+
 
     checkStat = () => {
         if (localStorage.getItem("status") != undefined) {
@@ -61,7 +63,10 @@ $(document).ready(function() {
     }
 
     function getView(path) {
-        view = $('' + path.replace("/", "#") + '');
+        view = path.replace(/\//g, "-");
+        console.log("before path as id: ", view);
+        console.log("path as id: ", view.replace("-", "#"));
+        view = $('' + view.replace("-", "#") + '');
         view.removeAttr("hidden");
 
         if (view == "#resConfirm" || view == "#reservation") {
@@ -72,11 +77,11 @@ $(document).ready(function() {
         }
 
         if (path != "/home") { // Ensures that url path is null when on home
-            window.history.pushState(null, null, window.location.origin + path); // Changes the url without reload
+            window.history.pushState(null, null, window.location.origin + path.replace('-', '/')); // Changes the url without reload
         } else {
             window.history.pushState(null, null, window.location.origin); // Changes the url without reload
         }
-        console.log("Path: ", path);
+        console.log("Path: ", path.replace('-', '/'));
         return false;
     }
 

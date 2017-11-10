@@ -42,37 +42,78 @@ Hostess:
 		<title> RUI RS</title>
 		<meta charset="utf-8">
 		<meta name="view-point" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 		<link rel="stylesheet" href="./css/style.css"/>
-		<script
+		<script>
+
+			/*////// Checks the url for multiple slashes and turns the to hyphens then the ///////
+			//////// first hyphen back to a slash so the redirect code will work for all routes //
+			//////// used in this code /////////////////////////////////////////////////////////// */
+			var count;
+			if((count = (window.location.pathname.match(/\//g) || []).length) <= 1){
+				//alert("no second /");
+			}else if((count = (window.location.pathname.match(/-/g) || []).length) < 1){
+				path = window.location.pathname.replace(/\//g,"-");
+				window.location.pathname = path.replace("-","/");
+			}
+			
+		</script>
+
+		<!-- SCRIPTS -->
+		<!--<script
 			src="https://code.jquery.com/jquery-3.2.1.min.js"
 			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 			crossorigin="anonymous">
-		</script>
+		</script>-->
+		<script src="./js/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 		<script language="javascript" src="./js/script.js"></script>
+	
 	</head>
 	
 	<body>
 		<header class="page-header">
-			<img src="" alt=""/>
-			<h1>RIU Jamaica</h1>
 			<nav class="navbar">
-				<ul class="nav-routes">
-					<li class="route-item">
-						<a class="route" href="/home">Home</a>
-					</li>
-					<li class="route-item log-route">
-						<a class="route" href="/login">Login</a>
-					</li>
-					<li class="route-item log-route">
-						<a class="route" href="/guests">Reserve Seat</a>
-					</li>
-					<li hidden class="route-item host-route">
-						<a class="route" href="/hostess">Manage Reservations</a>
-					</li>
-					<li hidden class="route-item host-route">
-						<a class="route" href="/logout">Logout</a>
-					</li>
-				</ul>
+				<div class="nav-wrapper">
+					<a href="/home" class="brand-logo route"> RIU Jamaica</a>
+					<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>	
+					<ul class="nav-routes right hide-on-med-and-down">
+						<li class="route-item">
+							<a class="route" href="/home">Home</a>
+						</li>
+						<li class="route-item log-route">
+							<a class="route" href="/login">Login</a>
+						</li>
+						<li class="route-item log-route">
+							<a class="route" href="/guests">Reserve Seat</a>
+						</li>
+						<li hidden class="route-item host-route">
+							<a class="route" href="/hostess">Manage Reservations</a>
+						</li>
+						<li hidden class="route-item host-route">
+							<a class="route" href="/logout">Logout</a>
+						</li>
+					</ul>	
+					<ul class="nav-routes side-nav" id="mobile-demo">
+						<li class="route-item">
+							<a class="route" href="/home">Home</a>
+						</li>
+						<li class="route-item log-route">
+							<a class="route" href="/login">Login</a>
+						</li>
+						<li class="route-item log-route">
+							<a class="route" href="/guests">Reserve Seat</a>
+						</li>
+						<li hidden class="route-item host-route">
+							<a class="route" href="/hostess">Manage Reservations</a>
+						</li>
+						<li hidden class="route-item host-route">
+							<a class="route" href="/logout">Logout</a>
+						</li>
+					</ul>				
+				</div>
+				
 			</nav>
 		</header>
 		
@@ -135,10 +176,17 @@ Hostess:
 						<tr><td><label>Email</label></td></tr>
 						<tr><td><input type="email" name="email" placeholder="exam@ple.com"/></td></tr>
 					</table>
+					<a href="/guests-seatupd" class="route">Change seat on previous reservation</a>
 					<button type="submit" id="guest-btn">Set Reservation</button>
 				</form>
 			</div>
 			<!-- Guest Reservation View Container -->
+			
+			<!-- Guest Change Seat View Container -->
+			<div hidden class="guests/seatup view" id="guests-seatupd">
+				<h1>This is where guests change their seat</h1>
+			</div>
+			<!-- Guest Change Seat View Container -->
 
 			<!-- Reservation Confirmation View Container -->
 			<div hidden class="resConfirm view" id="resConfirm">
@@ -188,6 +236,8 @@ Hostess:
 			</div>
 			<!-- Retreived Reservation View Container -->
 		</div>
+
+		
 	</body>
  </html>
  

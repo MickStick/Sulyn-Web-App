@@ -1,17 +1,22 @@
 const express = require('express');
+//const vhost = require('vhost');
 const path = require('path');
 const fs = require('fs');
 const bp = require('body-parser');
 var urlcp = bp.urlencoded({ extended: false });
-const port = 8888;
+const port = 8080;
+
+// const master = express(); 
+// const domain = "riurs.dev"
 
 const app = express();
-
 //app.use(express.static(path.join(__dirname, 'public')));
+//app.use(vhost)
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
+
 
 app.post('/reserve', urlcp, function(req, res, next) {
     var reservations = null;
@@ -123,7 +128,13 @@ var j = schedule.scheduleJob({ hour: 12, minute: 35, dayOfWeek: 6 }, function() 
     });
 });
 
+// app.use(vhost(domain, express.static(path.join(__dirname, 'public'))));
+//master.use(vhost(domain,app));
 
+
+//master.use(evhost.vhost(master.enabled('trust proxy')));
 app.listen(port, function() {
     console.log("Server listening to: " + port);
 });
+
+//evhost.register(domain, appFactory());

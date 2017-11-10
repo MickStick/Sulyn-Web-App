@@ -1,16 +1,7 @@
-.nav-routes{
-    list-style-type: none;
-}
-
-.nav-routes .route-item{
-    display: inline;
-    transition: background 150ms;
-}
-
-#loginErr{
+#loginErr {
     color: red;
 }
 
-#resErr{
+#resErr {
     color: red;
 }
