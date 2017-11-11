@@ -41,7 +41,7 @@ Hostess:
 	<head>
 		<title> RIU RP</title>
 		<meta charset="utf-8">
-		<meta name="view-point" content="width=device-width, initial-scale=1.0">
+		<meta name="view-point" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 		<link rel="stylesheet" href="./css/style.css"/>
@@ -104,7 +104,7 @@ Hostess:
 				
 			</nav>
 			<div class="progress" id="progress" style="margin-top: 0 !important;">
-			<div class="indeterminate red"></div>
+			<div class="indeterminate red lighten-3"></div>
 			</div>
 		</header>
 		
@@ -133,7 +133,7 @@ Hostess:
 						<label for="pword">Password</label>
 					</div>
 					<br>
-					<div><label id="loginErr"></label></div>
+					<div><label id="loginErr" class="Err"></label></div>
 					
 					<button class="btn red waves-effect" type="submit" id="login-btn">Login</button>
 				</form>
@@ -210,24 +210,24 @@ Hostess:
 							<br>
 								<div>
 									<div class="row">
-										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="4 Seats">8</button></div>
-										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats">9</button></div>
-										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats" style="padding-left: 6.5mm !important; padding-right: 6.5mm !important;">10</button></div>
-										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="4 Seats" style="padding-left: 6.5mm !important; padding-right: 6.5mm !important;">11</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seat" title="4 Seats">8</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seat" title="2 seats">9</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seat" title="2 seats" style="padding-left: 6.5mm !important; padding-right: 6.5mm !important;">10</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seat" title="4 Seats" style="padding-left: 6.5mm !important; padding-right: 6.5mm !important;">11</button></div>
 									</div>
 									<br>
 									<div class="row r2" >
-										<!-- <div class="col s1"><button class="btn-flat disabled orange white-text"> </button></div> -->
-										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats">5</button></div>
-										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats">6</button></div>
-										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats">7</button></div>
+										<!-- <div class="col s1"><button class="btn-flat disabled amber white-text"> </button></div> -->
+										<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seat" title="2 seats">5</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seat" title="2 seats">6</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seat" title="2 seats">7</button></div>
 									</div>
 									<br>
 									<div class="row">
-										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="4 Seats">1</button></div>
-										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats">2</button></div>
-										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="2 seats">3</button></div>
-										<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seat" title="4 Seats">4</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seat" title="4 Seats">1</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seat" title="2 seats">2</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seat" title="2 seats">3</button></div>
+										<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seat" title="4 Seats">4</button></div>
 									</div>
 									<br>
 								</div>
@@ -245,8 +245,13 @@ Hostess:
 						<label for="email">Email</label>
 
 					</div> <br>
-					<a href="/guests-seatupd" class="route btn-floating btn red right" title="Edit previous reservation table"><i class="large material-icons">mode_edit</i></a>
-					<button class="btn red left" type="submit" id="guest-btn">Set Reservation</button>
+					<div class="right">
+						<a href="/guests-seatupd" class="route btn-flat red lighten-4 waves-effect waves-red" title="Edit previous reservation table">Change table?</a>
+					</div>
+					<div class="left">
+						<button class="btn red" type="submit" id="guest-btn">Set Reservation</button>
+					</div>	
+					
 					<div class="clearfix"></div>
 				</form>
 				<br><br>
@@ -266,7 +271,7 @@ Hostess:
 						<label for="ticket">Reservation Ticket</label>
 					</div>
 					<div>
-						<label id="seatUpErr"></label>
+						<label id="seatUpErr" class="Err"></label>
 					</div>
 					<button class="btn red" id="getSeatUp-btn">Find Reservation</button>
 
@@ -291,24 +296,24 @@ Hostess:
 								<br>
 									<div>
 										<div class="row">
-											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="4 Seats">8</button></div>
-											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats">9</button></div>
-											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats" style="padding-left: 6.5mm !important; padding-right: 6.5mm !important;">10</button></div>
-											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="4 Seats" style="padding-left: 6.5mm !important; padding-right: 6.5mm !important;">11</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seatUp" title="4 Seats">8</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seatUp" title="2 seats">9</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seatUp" title="2 seats" style="padding-left: 6.5mm !important; padding-right: 6.5mm !important;">10</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seatUp" title="4 Seats" style="padding-left: 6.5mm !important; padding-right: 6.5mm !important;">11</button></div>
 										</div>
 										<br>
 										<div class="row r2" >
-											<!-- <div class="col s1"><button class="btn-flat disabled orange white-text"> </button></div> -->
-											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats">5</button></div>
-											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats">6</button></div>
-											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats">7</button></div>
+											<!-- <div class="col s1"><button class="btn-flat disabled amber white-text"> </button></div> -->
+											<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seatUp" title="2 seats">5</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seatUp" title="2 seats">6</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seatUp" title="2 seats">7</button></div>
 										</div>
 										<br>
 										<div class="row">
-											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="4 Seats">1</button></div>
-											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats">2</button></div>
-											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="2 seats">3</button></div>
-											<div class="col s1"><button class="btn-flat waves-effect orange waves-light white-text seatUp" title="4 Seats">4</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seatUp" title="4 Seats">1</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seatUp" title="2 seats">2</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seatUp" title="2 seats">3</button></div>
+											<div class="col s1"><button class="btn-flat waves-effect amber waves-light white-text seatUp" title="4 Seats">4</button></div>
 										</div>
 										<br>
 									</div>
@@ -357,7 +362,7 @@ Hostess:
 						<label for="ticket">Reservation Ticket</label>
 					</div>
 					<div>
-						<label id="resErr"></label>
+						<label id="resErr" class="Err"></label>
 					</div>
 					<button class="btn red" id="host-btn">Find Reservation</button>
 

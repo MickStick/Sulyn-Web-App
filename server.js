@@ -35,7 +35,7 @@ app.post('/reserve', urlcp, function(req, res, next) {
             rNum: req.body.rNum,
             time: req.body.time,
             date: req.body.date,
-            seat: req.body.seat,
+            table: req.body.seat,
             email: req.body.email
         }
         if (reservations[0] != undefined) {
@@ -77,6 +77,26 @@ app.post('/getreserve', urlcp, function(req, res, next) {
                 reservation: chk
             });
         }
+    });
+});
+
+app.get('/tables', function(req, res, next) {
+    console.log("getreserve");
+    fs.readFile('public/js/reserve.json', function(err, data) {
+        if (err) {
+            console.log(err);
+            res.json({ success: false, msg: "File Error" });
+        }
+        //chk = findReservation(req.body, JSON.parse(data));
+        let tables = [];
+        for(var x = 0; x < JSON.parse(data).length; x++){
+            tables.push(JSON.parse(data)[x].table);
+        }
+        res.json({
+            success: true,
+            msg: "found",
+            reservation: tables
+        });
     });
 });
 

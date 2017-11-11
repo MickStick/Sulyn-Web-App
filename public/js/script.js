@@ -5,6 +5,10 @@ $(document).ready(function() {
     $(".button-collapse").sideNav(); //Initiaizze button for mobile menu show/hide
     Materialize.updateTextFields();
 
+    $('.side-nav .route-item').click(function(){
+        $(".button-collapse").click();
+    });
+
     //// date picker
     $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
@@ -170,6 +174,10 @@ $(document).ready(function() {
             }
         }
         return false;
+    }
+
+    checkTables(){
+        
     }
 
     checkStat(); // Thease are run onLoad
