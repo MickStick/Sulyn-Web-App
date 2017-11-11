@@ -88,6 +88,18 @@ $(document).ready(function() {
         }
     ];
 
+    const routes = ["/","/guests","/login","hostess"]
+
+    function isRoute(path){
+        for(var x = 0; x < routes.length; x++){
+            if(path == routes[x]){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     checkStat = () => {
         if (localStorage.getItem("status") != undefined) {
@@ -129,9 +141,11 @@ $(document).ready(function() {
             }
         } else if (window.location.pathname == "/logout") {
             onLogout();
-        } else if(window.location.pathname == "/guest/seatup-update" || window.location.pathname == "/guests-seatupd"){
+        } else if(window.location.pathname == "/guest/seatup-update" || window.location.pathname == "/guests-seatupd" || window.location.pathname == "/guests/seatup-update" || window.location.pathname == "/guest-seatupd"){
             getView("/guests");
-        } else {
+        } else if(!isRoute(window.location.pathname)){
+            getView("/home");
+        }else {
             getView(window.location.pathname);
         }
     }
@@ -176,8 +190,8 @@ $(document).ready(function() {
         return false;
     }
 
-    checkTables(){
-        
+    function checkTables(){
+
     }
 
     checkStat(); // Thease are run onLoad

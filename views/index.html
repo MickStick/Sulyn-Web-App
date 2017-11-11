@@ -49,6 +49,22 @@ Hostess:
 		
 
 		<!-- SCRIPTS -->
+		<script>
+			/*////// Checks the url for multiple slashes and turns the to hyphens then the ///////
+			//////// first hyphen back to a slash so the redirect code will work for all routes //
+			//////// used in this code /////////////////////////////////////////////////////////// */
+			console.log("slash count: " + window.location.pathname.match(/\//g).length);	
+			// if( window.location.pathname.match(/\//g).length > 1){
+			// 	window.location.pathname = "/";
+			// }
+			if((/^\/guests/).test(window.location.pathname) && window.location.pathname.match(/\//g).length > 1){
+				window.location.pathname = "/guests";
+			}else if((/^\/guests/).test(window.location.pathname)){
+
+			}else if(window.location.pathname.match(/guest/g) || window.location.pathname.match("/guests/")){
+				window.location.pathname = "/guests";
+			}
+		</script>
 		<!--<script
 			src="https://code.jquery.com/jquery-3.2.1.min.js"
 			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -398,14 +414,15 @@ Hostess:
 			// 	path = window.location.pathname.replace(/\//g,"-");
 			// 	window.location.pathname = path.replace("-","/");
 			// }
+			
 			var preloader = document.getElementById("progress");
 			window.addEventListener("load", function(){
 				preloader.style.display = "none";
 			});
 
-			if(window.location.pathname == "/guest/seatup-update" || window.location.pathname == "/guests/seatupd"){
-				window.location.pathname = "/guests";
-        }
+			// if(window.location.pathname == "/guest/seatup-update" || window.location.pathname == "/guests-seatupd" || window.location.pathname == "/guests/seatup-update" || window.location.pathname == "/guest-seatupd" || window.location.pathname == "/guest/seatup/update" || window.location.pathname == "/guests/seatupd"){
+			// 	window.location.pathname = "/guests";
+			// }
 			
 		</script>
 	</body>
