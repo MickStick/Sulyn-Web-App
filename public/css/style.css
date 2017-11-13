@@ -1,3 +1,15 @@
+body {
+    height: 100% !important;
+}
+
+.view {
+    height: 100% !important;
+    padding-bottom: 10mm !important;
+}
+ .carousel {
+    /* outline: red solid !important; */
+    height: 530px !important;
+ }
 #loginErr {
     color: red;
 }
@@ -51,7 +63,9 @@ input:focus~label {
     width: 300px !important;
 }
 
-
+.activeLink{
+    background: rgba(0,0,0,0.1) !important;
+}
 
 @media screen and (max-width: 545px) {
     .row {

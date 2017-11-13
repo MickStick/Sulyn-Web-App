@@ -2,6 +2,9 @@ $(document).ready(function() {
 
     /* ///////////// MATERIALIZE ///////////// */
 
+    $('.carousel.carousel-slider').carousel({fullWidth: true});
+    $('.carousel').carousel();
+
     $(".button-collapse").sideNav(); //Initiaizze button for mobile menu show/hide
     Materialize.updateTextFields();
 
@@ -88,7 +91,7 @@ $(document).ready(function() {
         }
     ];
 
-    const routes = ["/","/guests","/login","hostess"]
+    const routes = ["/","/guests","/login","/hostess"]
 
     function isRoute(path){
         for(var x = 0; x < routes.length; x++){
@@ -150,6 +153,7 @@ $(document).ready(function() {
         }
     }
 
+
     function getView(path) {
         view = path.replace(/\//g, "-");
         console.log("before path as id: ", view);
@@ -157,11 +161,13 @@ $(document).ready(function() {
         view = $('' + view.replace("-", "#") + '');
         view.removeAttr("hidden");
 
-        if (view == "#resConfirm" || view == "#reservation") {
-
-        } else {
-            $('.route-item').css({ "background": "transparent" }); // Sets active link
-            $('a[href="' + path.replace("/", "#") + '"]').parent('li').css({ "background": "rgba(20,180,90,0.5)" });
+        if (isRoute(path.replace('-', '/')) || path.replace('-', '/') == "/home") {
+            console.log(path + " is a route");
+            $('.route-item').removeClass('activeLink');//css({ "background": "transparent" }); // Sets active link
+            $('a[href="' + path.replace('-', '/') + '"]').parent('li').addClass('activeLink');
+        }else if (path.match(/guest/g)){
+            $('.route-item').removeClass('activeLink');
+            $('a[href="/guests"]').parent('li').addClass('activeLink');
         }
 
         if (path != "/home") { // Ensures that url path is null when on home
@@ -229,37 +235,51 @@ $(document).ready(function() {
 
     });
 
+    const resIsFilled = () => {
+        for(var x = 0; x < $('.guest-form input').length; x++){
+            if($('.guest-form input').eq(x).val() == "" || $('.guest-form input').eq(x).val() == null){
+                return false;
+            }
+        }
+        return true;
+    }
+
     $('#guest-btn').click(function(e) {
         e.preventDefault();
-        var reserve = { // Stores reservation form information in a JSON object
-            name: $('.guest-form input[name="name"]').val(),
-            rNum: $('.guest-form input[name="rNum"]').val(),
-            gNum: $('.guest-form input[name="gNum"]').val(),
-            time: $('.guest-form input[name="time"]').val(),
-            date: $('.guest-form input[name="date"]').val(),
-            seat: $('.guest-form input[name="seat"]').val(),
-            email: $('.guest-form input[name="email"]').val()
-        };
-        $.ajax({
-            type: 'POST', ////////////////////////////////////////////
-            url: '/reserve', // Send info to server to be processed
-            data: reserve, ///////////////////////////////////////////
-            success: function(data) {
-                setHidden();
-                $('.resConfirm-table #resNum').text(data.ticket);
-                $('.resConfirm-table #resName').text(reserve.name);
-                $('.resConfirm-table #resrNum').text(reserve.rNum);
-                $('.resConfirm-table #resgNum').text(reserve.gNum); ///////////////////////////////////////
-                $('.resConfirm-table #resRest').text(reserve.restaurant); //
-                $('.resConfirm-table #resTime').text(reserve.time); // Receives response containing data.
-                $('.resConfirm-table #resDate').text(reserve.date); // Sets confirmation fields.
-                $('.resConfirm-table #resSeat').text(reserve.seat); //
-                $('.resConfirm-table #resEmail').text(reserve.email); // Calls confirmation view.
-                getView("#resConfirm"); // Sets reservation inputs to null. 
-                $('.guest-form input').val(""); /////////////////////////////////////
-                console.log(data);
-            }
-        });
+        if(resIsFilled()){
+            var reserve = { // Stores reservation form information in a JSON object
+                name: $('.guest-form input[name="name"]').val(),
+                rNum: $('.guest-form input[name="rNum"]').val(),
+                gNum: $('.guest-form input[name="gNum"]').val(),
+                time: $('.guest-form input[name="time"]').val(),
+                date: $('.guest-form input[name="date"]').val(),
+                seat: $('.guest-form input[name="seat"]').val(),
+                email: $('.guest-form input[name="email"]').val()
+            };
+            $.ajax({
+                type: 'POST', ////////////////////////////////////////////
+                url: '/reserve', // Send info to server to be processed
+                data: reserve, ///////////////////////////////////////////
+                success: function(data) {
+                    setHidden();
+                    $('.resConfirm-table #resNum').text(data.ticket);
+                    $('.resConfirm-table #resName').text(reserve.name);
+                    $('.resConfirm-table #resrNum').text(reserve.rNum);
+                    $('.resConfirm-table #resgNum').text(reserve.gNum); ///////////////////////////////////////
+                    $('.resConfirm-table #resRest').text(reserve.restaurant); //
+                    $('.resConfirm-table #resTime').text(reserve.time); // Receives response containing data.
+                    $('.resConfirm-table #resDate').text(reserve.date); // Sets confirmation fields.
+                    $('.resConfirm-table #resSeat').text(reserve.seat); //
+                    $('.resConfirm-table #resEmail').text(reserve.email); // Calls confirmation view.
+                    getView("#resConfirm"); // Sets reservation inputs to null. 
+                    $('.guest-form input').val(""); /////////////////////////////////////
+                    console.log(data);
+                }
+            });
+        }else{
+            alert("You must fill in all fields");
+        }
+        
     });
 
     $('#host-btn').click(function(e) {
@@ -279,7 +299,7 @@ $(document).ready(function() {
                     $('.reserve-table #resName').text(data.reservation.name); ///////////////////////////////////////
                     $('.reserve-table #resTime').text(data.reservation.time); //
                     $('.reserve-table #resDate').text(data.reservation.date); // Receives response containing data.
-                    $('.reserve-table #resSeat').text(data.reservation.seat); // Sets retreived fields.
+                    $('.reserve-table #resSeat').text(data.reservation.table); // Sets retreived fields.
                     getView("#reservation"); // Calls retreived  view.
                     $('.hostess-form #resErr').text(""); // Sets retireive  inputs to null.
                     $('.hostess-form input').val(""); // Sets error message to null
@@ -341,5 +361,13 @@ $(document).ready(function() {
     $('.guest-form select[name="restaurants"]').blur(function() {
         console.log($(this).val());
     });
+
+    var home = document.getElementById("home");
+    var observer = new MutationObserver(function(mutations) {
+        console.log('hidden changed');
+      });
+      observer.observe(home, { 
+        attributes: true, 
+        attributeFilter: ['hidden'] });
 
 });
