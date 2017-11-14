@@ -73,6 +73,11 @@ Hostess:
 		<script src="./js/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 		<script language="javascript" src="./js/script.js"></script>
+		<script>
+			$(window).on('beforeunload',() => {
+				$('.progress').css({"display":"block"});
+			});
+		</script>
 	
 	</head>
 	
@@ -268,8 +273,9 @@ Hostess:
 						
 						<input required type="email" class="validate" name="email" placeholder="exam@ple.com"/>
 						<label for="email">Email</label>
-
+						<p id="emResErr" class="Err"></p>
 					</div> <br>
+					<p id="setResErr" class="Err"></p>
 					<div class="right">
 						<a href="/guests-seatupd" class="route btn-flat red lighten-4 waves-effect waves-red" title="Edit previous reservation table">Change table?</a>
 					</div>

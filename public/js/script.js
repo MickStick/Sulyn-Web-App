@@ -5,7 +5,7 @@ $(document).ready(function() {
     $('.carousel.carousel-slider').carousel({fullWidth: true});
     $('.carousel').carousel();
 
-    $(".button-collapse").sideNav(); //Initiaizze button for mobile menu show/hide
+    $(".button-collapse").sideNav(); //Initiaize button for mobile menu show/hide
     Materialize.updateTextFields();
 
     $('.side-nav .route-item').click(function(){
@@ -55,6 +55,11 @@ $(document).ready(function() {
     $('.seat').on('click', function(e) {
         e.preventDefault();
     });
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * This sets the Table value depending on which table was selected in the table picker modal
+     */
     $('.seat').blur(function() {
         $('.guest-form input[name="seat"]').val($(this).text());
         $('.guest-form #table').text($(this).text());
@@ -72,6 +77,7 @@ $(document).ready(function() {
     $('#seatUpBtn').click(function() {
         console.log("Your table is: " + $('.guest-form input[name="seatUp"]').val());
     });
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     //// Modal
 
     /* ///////////// MATERIALIZE ///////////// */
@@ -91,8 +97,18 @@ $(document).ready(function() {
         }
     ];
 
-    const routes = ["/","/guests","/login","/hostess"]
+    /////////////////////////////////////////////////////////////////////////////
+    /**
+     * Array of recognized routes.
+     * These routes are the only routes that are allowed onLoad or onReload
+     */
+    const routes = ["/","/guests","/login","/hostess"];
 
+
+    /**
+     * This checks if specified string is a recognized route
+     * @return boolean
+     */
     function isRoute(path){
         for(var x = 0; x < routes.length; x++){
             if(path == routes[x]){
@@ -102,28 +118,44 @@ $(document).ready(function() {
 
         return false;
     }
+    /////////////////////////////////////////////////////////////////////////////
 
 
+    /**
+     * This displays and hides links that should be showed to a loogged in hostess or a guest
+     * @return boolean
+     */
     checkStat = () => {
         if (localStorage.getItem("status") != undefined) {
             $('.host-route').css({ "display": "initial" });
-            $('.log-route').css({ "display": "none" }); ///////////////////////////////////////
-            return true; //  
-        } else { // This displays and hides links 
-            $('.host-route').css({ "display": "none" }); // that should be showed to a loogged
-            $('.log-route').css({ "display": "initial" }); // in hostess or a guest
-            return false; //
-        } ////////////////////////////////////////
+            $('.log-route').css({ "display": "none" });
+            return true; 
+        } else { 
+            $('.host-route').css({ "display": "none" }); 
+            $('.log-route').css({ "display": "initial" }); 
+            return false; 
+        } 
     }
 
+
     const views = $('.view'); // Retreives all views and stores them in an array
+
+    /**
+     * Hides all views for navigation
+     * @return void
+     */
     setHidden = () => {
-        var x = 0; ////////////////////////////////////
-        for (x = 0; x < views.length; x++) { // Hides all views for navigation
-            views.eq(x).attr("hidden", "true"); ///////////////////////////////////
+        
+        var x = 0; 
+        for (x = 0; x < views.length; x++) { 
+            views.eq(x).attr("hidden", "true"); 
         }
     }
 
+    /**
+     * On page load, check the url and display the view that corresponds with the url
+     * @return void
+     */
     checkView = () => {
         if (window.location.pathname == "/") {
             setHidden();
@@ -133,13 +165,13 @@ $(document).ready(function() {
                 getView(window.location.pathname);
                 $('#hostess-name').text("Welcome " + localStorage.getItem("name"));
             } else {
-                window.location.pathname = "/login"; ///////////////////////////////////     
-            } //
-        } else if (window.location.pathname == "/login") { // On page load, check the url and
-            if (!checkStat()) { // display the view that 
-                getView("/login"); // corresponds with the url
-            } else { //
-                window.location.pathname = "/hostess"; //////////////////////////////////
+                window.location.pathname = "/login";
+            } 
+        } else if (window.location.pathname == "/login") {
+            if (!checkStat()) { 
+                getView("/login"); 
+            } else { 
+                window.location.pathname = "/hostess"; 
                 getView("/hostess");
             }
         } else if (window.location.pathname == "/logout") {
@@ -153,7 +185,10 @@ $(document).ready(function() {
         }
     }
 
-
+    /**
+     * This receives a string containing a view name then hides current view then shows received view
+     * @return false
+     */
     function getView(path) {
         view = path.replace(/\//g, "-");
         console.log("before path as id: ", view);
@@ -163,7 +198,7 @@ $(document).ready(function() {
 
         if (isRoute(path.replace('-', '/')) || path.replace('-', '/') == "/home") {
             console.log(path + " is a route");
-            $('.route-item').removeClass('activeLink');//css({ "background": "transparent" }); // Sets active link
+            $('.route-item').removeClass('activeLink'); // Sets active link
             $('a[href="' + path.replace('-', '/') + '"]').parent('li').addClass('activeLink');
         }else if (path.match(/guest/g)){
             $('.route-item').removeClass('activeLink');
@@ -176,18 +211,28 @@ $(document).ready(function() {
             window.history.pushState(null, null, window.location.origin); // Changes the url without reload
         }
         console.log("Path: ", path.replace('-', '/'));
+        $('.progress').css({"display":"none"});
         return false;
     }
 
+
+    /**
+     * Logs out hostess then redirects to 
+     * @return void
+     */
     onLogout = () => {
         localStorage.clear();
-        $('.hostess #hostess-name').text(""); ////////////////////////////////////////
-        setHidden(); // Logs out hostess then redirects to 
+        $('.hostess #hostess-name').text(""); 
+        setHidden(); 
         getView("/login"); // login view
-        checkStat(); ////////////////////////////////////////
+        checkStat(); 
     }
 
-    function isValid(name, pword) { // Login validation
+    /**
+     * Validate the login credentials
+     * @return boolean
+     */
+    function isValid(name, pword) { 
         for (x = 0; x < users.length; x++) {
             if (name == users[x].name && pword == users[x].password) {
                 return true;
@@ -196,28 +241,39 @@ $(document).ready(function() {
         return false;
     }
 
-    function checkTables(){
-
-    }
+    
 
     checkStat(); // Thease are run onLoad
     checkView(); //
 
+
+    /**
+     * This listens for route click then displays the specific
+     * @return false
+     */
     $('.route').click(function(e) {
+        
         e.preventDefault();
-        $('.progress').css({"display":"block"});
-        if ($(this).attr("href") == "/logout") {
-            onLogout();
-        } else {
-            setHidden();
-            getView($(this).attr("href"));
-        }
-        console.log("View: ",$(this).attr("href").replace("/","#"));
-        if($(''+$(this).attr("href").replace("/","#")).attr("hidden") == undefined){
-            $('.progress').css({"display":"none"});
-        }
+        let route = $(this);
+        $('.progress').show("fast",function(){
+            if (route.attr("href") == "/logout") {
+                onLogout();
+            } else {
+                setHidden();
+                getView(route.attr("href"));
+            }
+            console.log("View: ",route.attr("href").replace("/","#"));
+            if($(''+route.attr("href").replace("/","#")).attr("hidden") == undefined){
+                $('.progress').css({"display":"none"});
+            }
+        });
     });
 
+
+    /**
+     * Listens for login button click then runs login functionality
+     * @return false
+     */
     $('#login-btn').click(function(e) {
         e.preventDefault();
         if (isValid($('.login-form input[name="uname"]').val(), $('.login-form input[name="pword"]').val())) {
@@ -235,6 +291,11 @@ $(document).ready(function() {
 
     });
 
+
+    /**
+     * Checks if all fields in the reservation form are filled out
+     * @return boolean
+     */
     const resIsFilled = () => {
         for(var x = 0; x < $('.guest-form input').length; x++){
             if($('.guest-form input').eq(x).val() == "" || $('.guest-form input').eq(x).val() == null){
@@ -244,15 +305,28 @@ $(document).ready(function() {
         return true;
     }
 
+
+    /**
+     * listens for reservation form button click then runs set reservation functionality
+     * @return false
+     */
     $('#guest-btn').click(function(e) {
         e.preventDefault();
-        if(resIsFilled()){
+        if(resIsFilled()){//Checks if field are all filled out
+            emVal = /^$/
+            if(!emVal.test($('.guest-form input[name="email"]').val())){ //Checks if email entered if a valid email address
+                $('#emResErr').text("Invalid Email, Chap!"); //Set Email Error
+                return false;
+            }
+            let date = new Date($('.guest-form input[name="date"]').val());
+            date.setHours($('.guest-form input[name="time"]').val().split(':')[0]);
+            date.setMinutes($('.guest-form input[name="time"]').val().split(':')[1]);
             var reserve = { // Stores reservation form information in a JSON object
                 name: $('.guest-form input[name="name"]').val(),
                 rNum: $('.guest-form input[name="rNum"]').val(),
                 gNum: $('.guest-form input[name="gNum"]').val(),
                 time: $('.guest-form input[name="time"]').val(),
-                date: $('.guest-form input[name="date"]').val(),
+                date: date,
                 seat: $('.guest-form input[name="seat"]').val(),
                 email: $('.guest-form input[name="email"]').val()
             };
@@ -276,8 +350,10 @@ $(document).ready(function() {
                     console.log(data);
                 }
             });
+            $('#emResErr').text("");// Reset Email Error
+            $('#setResErr').text("");// Reset Form Error
         }else{
-            alert("You must fill in all fields");
+            $('#setResErr').text("Please fill out all fields!"); // Set Form Error
         }
         
     });
