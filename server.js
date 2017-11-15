@@ -118,26 +118,73 @@ app.post('/tables', urlcp, function(req, res, next) {
             res.json({ success: false, msg: "File Error" });
         }
         let DATA = JSON.parse(data);
-
         if(DATA.length < 1){
             res.json({ success: true, msg: "No Reservations" });
+        }else{
+            let tables = [];
+            for(var x = 0; x < DATA.length; x++){
+                var d = new Date(DATA[x].date);
+                var D = d.getMonth() + " " + d.getDate() + ", " + d.getYear() + " ... " + d.getHours() + ":" + d.getMinutes();
+                var rd = new Date(req.body.date);
+                var RD = rd.getMonth() + " " + rd.getDate() + ", " + rd.getYear() + " ... " + rd.getHours() + ":" + rd.getMinutes();
+                console.log("d: " + D + "\nrd: " + RD);
+                if(D == RD){
+                    console.log("pushed");
+                    tables.push(DATA[x].table);
+                    
+                }else{
+                    console.log("tf!?!?");
+                }
+            }
+            console.log("tables: " + JSON.stringify(tables));
+            if(tables.length < 1){
+                res.json({ success: true, msg: "No Reservation on that date" });
+            }else{
+                res.json({ success: true, data: tables });
+            }
+            
         }
         
-        let tables = [];
-        for(var x = 0; x < DATA.length; x++){
-            if(req.body.date == DATA[x].date){
-                tables.push(DATA[x].date);
-            }
-        }
-        if(tables.length < 1){
-            res.json({ success: true, msg: "No Reservation on that date" });
-        }else{
-            res.json({ success: true, data: tables });
-        }
         
     });
 
 
+});
+
+
+/**
+ * POST function that receive updated table value and updates the specfied reservation
+ * @return JSON Object with success and message or data
+ */
+app.post('/UpTable', urlcp, function(req, res, next) {
+    var reservations = null;
+    var reserveSet = {};
+    fs.readFile('public/js/reserve.json', function(err, data) {
+        if (err) {
+            console.log(err);
+            res.json({ success: false });
+        }
+
+        reservations = JSON.parse(data);
+        var newRes = {};
+        for(var x = 0; x < reservations.length; x++){
+            if(reservations[x].reservationNum == req.body.ticket){
+                reservations[x].table = req.body.newSeat;
+                newRes = reservations[x];
+                break;
+            }
+        }
+        var DATA = JSON.stringify(reservations);
+        Data = DATA.split(",");
+        // console.log(Data);
+        fs.writeFile('public/js/reserve.json', Data, function(err) {
+            if (err) {
+                console.log(err);
+                res.json({success:false, msg:"Write File Error!"});
+            }
+        });
+        res.json({ success: "supmn", reserve: newRes });
+    });
 });
 
 

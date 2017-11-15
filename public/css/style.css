@@ -77,7 +77,7 @@ input:focus~label {
     }
 }
 
-.seat:focus {
+.seat:focus, .seatUp:focus {
     background: teal !important;
     background-color: teal !important;
 }

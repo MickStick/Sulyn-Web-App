@@ -136,7 +136,7 @@ Hostess:
 				<p class="center flow-text"> Welome To the RUI Jamaica Resorts Reservation system. Choose when, choose where then just walk in. </p>
 
 				
-					<div class="carousel carousel-slider">
+					<div class="carousel carousel-slider" data-indicators="true">
 						<a class="carousel-item" href="#one!"><img src="./static/Screenshot (193).png"></a>
 						<a class="carousel-item" href="#two!"><img src="./static/Screenshot (194).png"></a>
 						<a class="carousel-item" href="#three!"><img src="./static/Screenshot (197).png"></a>
@@ -191,8 +191,9 @@ Hostess:
 						
 						<input type="number" name="gNum" placeholder="XXX"/>
 						<label for="gNum">Number of Guests</label>
-
+						<p id="gNumErr" class="Err"></p>
 					</div>
+
 					<!-- <div class="input-field">
 						<label for="restaurants">Choose Restaurant</label>
 						<select name="restaurants" id="">
@@ -225,6 +226,7 @@ Hostess:
 					<div class="input-field">
 						<!-- <label for="date">Date</label> -->
 						<input type="date" name="date" placeholder="Click To Choose Reservation Date." class="datepicker"/>
+						<p id="dateErr" class="Err"></p>
 					</div>
 					<div class="input-field">
 						
@@ -236,7 +238,8 @@ Hostess:
 						<!-- Seat Picker Structure -->
 						<div id="modal1" class="modal">
 							<div class="modal-content">
-							<h4 class="center">Choose A Table</h4>
+							<h4 class="center" id="modelBtn" >Choose A Table</h4>
+							
 							<br>
 								<div>
 									<div class="row">
@@ -316,6 +319,7 @@ Hostess:
 						<p id="userGot"></p><br>
 						<div class="input-field">
 							<input hidden type="text" name="seatUp" />
+							<input hidden type="text" name="ticket" />
 							<h6 class="black-text" style="font-size: 20px !important;">You Chose Table: <span id="tableUp"></span></h6>
 							<!-- Seat Picker Trigger -->
 							<a class="waves-effect waves-light btn amber modal-trigger black-text" href="#modal2"> Choose A Table</a>
@@ -354,6 +358,7 @@ Hostess:
 								</div>
 							</div>
 						</div><br><br>
+						<p id="UpErr" class="Err"></p>
 						<button id="UpseatBtn" class="btn red waves-effect waves-light left">Update Seat</button>
 						<a class="btn red waves-effect waves-light right" href="guest">Cancel</a>
 						<div class="clearfix"></div>
@@ -415,7 +420,7 @@ Hostess:
 			<!-- Retreived Reservation View Container -->
 		</div>
 
-
+		
 
 		<script>
 

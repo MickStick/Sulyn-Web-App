@@ -15,8 +15,10 @@ $(document).ready(function() {
     //// date picker
     $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15 // Creates a dropdown of 15 years to control year
+        selectYears: 15, // Creates a dropdown of 15 years to control year
+        closeOnSelect: true
     });
+
     $('input').addClass("black-text");
     //// date picker
 
@@ -41,17 +43,22 @@ $(document).ready(function() {
         inDuration: 300, // Transition in duration
         outDuration: 200, // Transition out duration
         startingTop: '4%', // Starting top style attribute
-        endingTop: '10%' //, // Ending top style attribute
-            // ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-            //   alert("Ready");
-            //   console.log(modal, trigger);
-            // },
+        endingTop: '10%', //, // Ending top style attribute
+        ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+            if($(this).is('#modal1')){
+                if($('.guest-form input[name="time"]').val() == "" || $('.guest-form input[name="date"]').val() == ""){
+                    alert("Please Choose A Time and Date");
+                    $('#modal1').modal('close');
+                }
+            }
+            
+        },
             // complete: function() { alert('Closed'); } // Callback for Modal close
     });
-    $('#modal1').modal('open');
-    $('#modal1').modal('close');
-    $('#modal2').modal('open');
-    $('#modal2').modal('close');
+    /*$('#modal1').modal('open');
+    $('#modal1').modal('close');*/
+    /*$('#modal2').modal('open');
+    $('#modal2').modal('close');*/
     $('.seat').on('click', function(e) {
         e.preventDefault();
     });
@@ -65,16 +72,29 @@ $(document).ready(function() {
         $('.guest-form #table').text($(this).text());
     });
 
+    // $('.modal-trigger').click(function(e){
+    //     if($('.guest-form input[name="time"]').val() == "" || $('.guest-form input[name="date"]').val() == ""){
+    //         alert("Please Choose A Time and Date");
+    //         $('#modal1').modal('close');
+    //     }
+    // });
+
     $('#seatBtn').click(function() {
         console.log("Your table is: " + $('.guest-form input[name="seat"]').val());
     });
 
-    $('.seatUp').blur(function() {
-        $('.guest-form input[name="seatUp"]').val($(this).text());
-        $('.guest-form #tableUp').text($(this).text());
+    $('.seatUp').click(function(e){
+        e.preventDefault();
     });
 
-    $('#seatUpBtn').click(function() {
+    $('.seatUp').blur(function(e) {
+        e.preventDefault();
+        $('.seatUp-form input[name="seatUp"]').val($(this).text());
+        $('.seatUp-form #tableUp').text($(this).text());
+    });
+
+    $('#seatUpBtn').click(function(e) {
+        e.preventDefault();
         console.log("Your table is: " + $('.guest-form input[name="seatUp"]').val());
     });
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,7 +333,7 @@ $(document).ready(function() {
     $('#guest-btn').click(function(e) {
         e.preventDefault();
         if(resIsFilled()){//Checks if field are all filled out
-            emVal = /^$/
+            emVal = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             if(!emVal.test($('.guest-form input[name="email"]').val())){ //Checks if email entered if a valid email address
                 $('#emResErr').text("Invalid Email, Chap!"); //Set Email Error
                 return false;
@@ -392,6 +412,7 @@ $(document).ready(function() {
             name: $('.getSeat-form input[name="name"]').val(),
             ticket: $('.getSeat-form input[name="ticket"]').val()
         };
+        
         $.ajax({
             type: 'POST', ///////////////////////////////////////////
             url: '/getreserve', // Send info to server to be processed
@@ -399,15 +420,44 @@ $(document).ready(function() {
             success: function(data) {
                 if (data.success) {
                     console.log(data);
-                    setHidden();
-                    /*$('.reserve-table #resName').text(data.reservation.name); ///////////////////////////////////////
-                    $('.reserve-table #resTime').text(data.reservation.time); //
-                    $('.reserve-table #resDate').text(data.reservation.date); // Receives response containing data.
-                    $('.reserve-table #resSeat').text(data.reservation.seat); // Sets retreived fields.*/
-                    $('.seatUp-form #userGot').text("Hello, " + data.reservation.name);
-                    getView("/guest-seatup-update"); // Calls retreived  view.
-                    $('.getSeat-form #seatUpErr').text(""); // Sets retireive  inputs to null.
-                    $('.getSeat-form input').val(""); // Sets error message to null
+                    var D = new Date(data.reservation.date)
+                    $.ajax({
+                        type: 'POST', ///////////////////////////////////////////
+                        url: '/tables', // Send info to server to be processed
+                        data: {date:D}, ///////////////////////////////////////////
+                        success: function(DATA) {
+                            $('#modal2 .col button').eq(x).removeClass("disabled");
+                            if (DATA.success) {
+                                if(DATA.data != undefined ){
+                                    for(var x = 0; x < $('#modal2 .col button').length; x++){
+                                        for(var y = 0; y < DATA.data.length; y++){
+                                            if($('#modal2 .col button').eq(x).text() == DATA.data[y]){
+                                                $('#modal2 .col button').eq(x).addClass("disabled");
+                                            }
+                                        }
+                                    }
+                                }
+                            } 
+                            if(data.reservation.gNum > 2){
+                                for(var x = 0; x < $('#modal2 .col button').length; x++){
+                                    if($('#modal2 .col button').eq(x).attr("title")[0] == "2"){
+                                        $('#modal2 .col button').eq(x).addClass("disabled");
+                                    }
+                                }                
+                            }
+                            setHidden();
+                            /* ///////////////////////////////////////
+                            /* //
+                            /* // Receives response containing data.
+                            /* // Sets retreived fields.*/
+                            $('.seatUp-form #userGot').text("Hello, " + data.reservation.name);
+                            $('.seatUp-form input[name="ticket"]').val(data.reservation.reservationNum);
+                            getView("/guest-seatup-update"); // Calls retreived  view.
+                            $('.getSeat-form #seatUpErr').text(""); // Sets retireive  inputs to null.
+                            $('.getSeat-form input').val(""); // Sets error message to null
+                        }
+                    });
+                    
                 } else { //        
                     $('.getSeat-form #seatUpErr').text(data.msg); /////////////////////////////////////
                 }
@@ -415,27 +465,117 @@ $(document).ready(function() {
         });
     });
 
-
-    $('.guest-form input[name="date"]').blur(function() {
-        console.log("date blurred");
-        var date = $(this).val().split('-');
-        for (x = 0; x < date.length; x++) {
-            console.log(date[x]);
+    $('.guest-form input[name="gNum"]').blur(function(){
+        $('.guest-form input[name="seat"]').val("");
+        console.log("Guest Num: "+$(this).val());
+        if($(this).val() < 2 || $(this).val() > 4){
+            $('#gNumErr').text("Only 2-4 person guests allowed");
+        }else{
+            $('#modal1 .col button').eq(x).removeClass("disabled");
+            if($(this).val() > 2){
+                for(var x = 0; x < $('#modal1 .col button').length; x++){
+                    if($('#modal1 .col button').eq(x).attr("title")[0] == "2"){
+                        $('#modal1 .col button').eq(x).addClass("disabled");
+                    }
+                }                
+            }
+            $('#gNumErr').text("");
+            
         }
+        
+    });
+    // $('.guest-form input[name="date"]').click(function(){
+    //     alert("Date Clicked");
+    //     if($('.guest-form input[name="time"]').val() == ""){
+    //         $('.datepicker').pickdate({
+    //             onSet: function( arg ){
+    //                 this.close();
+    //             }
+    //         });
+    //         $('#dateErr').text("Please Choose a Time");
+    //         return false;
+    //     }
+    // });
+
+    $('.guest-form input[name="date"]').change(function() {
+        if($('.guest-form input[name="time"]').val() == ""){
+            $('.guest-form input[name="date"]').val("");
+            $('#dateErr').text("Please Choose a Time");
+        }else{
+            $('#dateErr').text("");
+            
+            let D = new Date($('.guest-form input[name="date"]').val());
+            D.setHours($('.guest-form input[name="time"]').val().split(':')[0]);
+            D.setMinutes($('.guest-form input[name="time"]').val().split(':')[1]);
+    
+            $.ajax({
+                type: 'POST', ///////////////////////////////////////////
+                url: '/tables', // Send info to server to be processed
+                data: {date:D}, ///////////////////////////////////////////
+                success: function(data) {
+                    $('#modal1 .col button').eq(x).removeClass("disabled");
+                    $('.guest-form input[name="seat"]').val("");
+                    if (data.success) {
+                        if(data.data != undefined ){
+                            for(var x = 0; x < $('#modal1 .col button').length; x++){
+                                for(var y = 0; y < data.data.length; y++){
+                                    if($('#modal1 .col button').eq(x).text() == data.data[y]){
+                                        $('#modal1 .col button').eq(x).addClass("disabled");
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        $('.guest-form input[name="date"]').val("");
+                        $('.guest-form input[name="time"]').val("");
+                    }
+                }
+            });
+        }
+        
 
     });
 
     $('.guest-form input[name="time"]').blur(function() {
-        console.log("time blurred");
-        var time = $(this).val().split(':');
-        for (x = 0; x < time.length; x++) {
-            console.log(time[x]);
-        }
+        // console.log("time blurred");
+        // var time = $(this).val().split(':');
+        // for (x = 0; x < time.length; x++) {
+        //     console.log(time[x]);
+        // }
+        $('.guest-form input[name="date"]').val("");
 
     });
 
-    $('.guest-form select[name="restaurants"]').blur(function() {
-        console.log($(this).val());
+    $('#UpseatBtn').click(function(e){
+        e.preventDefault();
+        if($('.seatUp-form input[name="seatUp"]').val() == ""){
+            $('#UpErr').text("Please Select A Seat");
+        }
+        $('#UpErr').text("");
+        $.ajax({
+            type: 'POST', ///////////////////////////////////////////
+            url: '/UpTable', // Send info to server to be processed
+            data: {
+                ticket :$('.seatUp-form input[name="ticket"]').val(),
+                newSeat:$('.seatUp-form input[name="seatUp"]').val()
+            }, 
+            success: function(data) {
+                setHidden();
+                $('.resConfirm-table #resNum').text(data.reserve.reservationNum);
+                $('.resConfirm-table #resName').text(data.reserve.name);
+                $('.resConfirm-table #resrNum').text(data.reserve.rNum);
+                $('.resConfirm-table #resgNum').text(data.reserve.gNum); ///////////////////////////////////////
+                $('.resConfirm-table #resRest').text(data.reserve.restaurant); //
+                $('.resConfirm-table #resTime').text(data.reserve.time); // Receives response containing data.
+                $('.resConfirm-table #resDate').text(data.reserve.date); // Sets confirmation fields.
+                $('.resConfirm-table #resSeat').text(data.reserve.table); //
+                $('.resConfirm-table #resEmail').text(data.reserve.email); // Calls confirmation view.
+                getView("#resConfirm"); // Sets reservation inputs to null. 
+                $('.seatUp-form input').val(""); /////////////////////////////////////
+                console.log(data);
+            }
+        });
+        
     });
 
     var home = document.getElementById("home");
