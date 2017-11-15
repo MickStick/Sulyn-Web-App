@@ -249,9 +249,9 @@ emailOnRun = () => {
                         }
                     }else if(parseInt(rdate.getHours()) > parseInt(date.getHours())){
                         if((parseInt(date.getMinutes()) - parseInt(rdate.getMinutes())) > -1 || parseInt(rdate.getMinutes()) >= parseInt(date.getMinutes())){
-                            var eDate = new Date(res[x].date);
-                            eDate.setHours(rdate.getHours() - 1);
-                            emailReminder(res[x].email, eDate);
+                            // var eDate = new Date(res[x].date);
+                            // eDate.setHours(rdate.getHours() - 1);
+                            emailReminder(res[x].email, res[x].date);
                         }else{
                             console.log("No Reservations at this or after the hour");
                         }
@@ -298,8 +298,11 @@ var transporter = nodemailer.createTransport({
  * @return void
  */
 emailReminder = (email, date) => {
+    
     console.log("Remind:-");
-    console.log("\n\n/////////////\nEmail: " + email + "\nDate: " + date + "\n/////////////\n\n");
+    console.log("\n\n/////////////\nEmail: " + email + "\nDate: " + date);
+    date.setHours(parseInt(date.getHours()) - 1 + "");
+    console.log("Reminder Date: "+ date +"\n/////////////\n\n");
     var mailOptions = {
         from: 'mikshaw01@gmail.com',
         to: email,
