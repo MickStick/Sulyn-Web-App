@@ -9,8 +9,6 @@ If it's being used by a guest:
 -	Enter name 
 -	Room number 
 -	Number of persons 
--	Select which restaurant (steak house, 
-	bamboo, dolce vita and kulinarium)
 -	A virtual seating arrangement so that 
 	the guest can select where to sit (minimum of 2 seats 
 	and maximum of 4 seats)
@@ -30,7 +28,7 @@ If it's being used by the hostess:
 
 ## The Web Application
 
-This web application is made with a **Node JS** and **Express** server-side/back-end. The back-end utilizes simple server-client requests and responses. It also utilizes a file system for storing reservation data.
+This web application is made with a **Node JS** and **Express** server-side/back-end. The back-end utilizes simple server-client requests and responses. It also utilizes a file system for storing reservation data. The **Nodemailer** and **Node-Schedule** modules were also utilized to create and implement an email reminder system.
 
 The front-end is made with **HTML5**, **CSS3**, **JavaScript** and **JQuery**. **HTML5** and **CSS3** for the UI design while the **Javascript**/**JQuery** is used for server-client communication. The web app responsiveness is also taken cared of by using plain out Vanilla **Javascript**.
 
@@ -53,3 +51,7 @@ The front-end is made with **HTML5**, **CSS3**, **JavaScript** and **JQuery**. *
 To find out more about **Node JS** you visit the [documentation](https://nodejs.org/en/docs/ "Node JS Documentation") and you can also learn of **Node Package Manager (NPM)** [here.](https://www.npmjs.com/ "NPM Home").
 
 To find out more on the **Express** framework you may visit their [homepage](https://expressjs.com/ "Express JS Home").
+
+To find out more on the **Nodemailer** framework you may visit their [package](https://www.npmjs.com/package/nodemailer "Nodemailer NPM package page") page on **NPM**.
+
+To find out more on the **Node-Schedule** framework you may visit their [package](https://www.npmjs.com/package/node-schedule"Node-Schedule NPM package page") page on **NPM**.

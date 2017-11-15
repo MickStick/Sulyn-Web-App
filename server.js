@@ -57,7 +57,7 @@ app.post('/reserve', urlcp, function(req, res, next) {
             email: req.body.email
         }
         if (reservations[0] != undefined) {
-            reserveSet.reservationNum = reservations[reservations.length - 1].reservationNum + 1;
+            reserveSet.reservationNum = 1000 + reservations.length;
         } else {
             reserveSet.reservationNum = 1000;
         }
@@ -70,7 +70,7 @@ app.post('/reserve', urlcp, function(req, res, next) {
                 console.log(err);
                 res.json({success:false, msg:"Write File Error!"});
             }
-            emailReminder(req.body.email, new Date(req.body.date));
+            emailReminder(req.body.name, req.body.email, new Date(req.body.date));
         });
         res.json({ success: "supmn", ticket: reserveSet.reservationNum });
     });
@@ -226,7 +226,7 @@ emailOnRun = () => {
         }
         var res = JSON.parse(data);
         if(res.length > 0){
-            let date = new Date();
+            let date = new Date(Date());
             for(var x = 0; x < res.length; x ++){
                 rdate = new Date(res[x].date);
                 if(date.getMonth() + date.getDate() + date.getYear() == rdate.getMonth() + rdate.getDate() + rdate.getYear()){
@@ -235,15 +235,17 @@ emailOnRun = () => {
                     // console.log("This Minute: " + parseInt(date.getMinutes()));
                     // console.log("Res Minute: " + parseInt(rdate.getMinutes()));
                     if(parseInt(rdate.getHours()) ==  parseInt(date.getHours()) ){
-                        if(parseInt(rdate.getMinutes()) >= parseInt(date.getMinutes())){
-                            emailReminder(res[x].email, res[x].date);
+                        if(parseInt(date.getMinutes()) - parseInt(rdate.getMinutes()) < 1){
+                            let edate = new Date(res[x].date);
+                            edate.setHours(parseInt(edate.getHours()) + 1);
+                            emailReminder(res[x].name, res[x].email, edate);emailReminder(res[x].name, res[x].email, res[x].date);
                         }else{
                             console.log("No Reservations at this or after the hour");
                         }
                         
                     }else if(parseInt(rdate.getHours()) == parseInt(date.getHours()) + 1){
-                        if((parseInt(date.getMinutes()) - parseInt(rdate.getMinutes())) > -1 || parseInt(rdate.getMinutes()) >= parseInt(date.getMinutes())){
-                            emailReminder(res[x].email, Date());
+                        if(parseInt(date.getMinutes()) - parseInt(rdate.getMinutes()) < 1){
+                            emailReminder(res[x].name, res[x].email, res[x].date);
                         }else{
                             console.log("No Reservations at this or after the hour");
                         }
@@ -251,7 +253,7 @@ emailOnRun = () => {
                         if((parseInt(date.getMinutes()) - parseInt(rdate.getMinutes())) > -1 || parseInt(rdate.getMinutes()) >= parseInt(date.getMinutes())){
                             // var eDate = new Date(res[x].date);
                             // eDate.setHours(rdate.getHours() - 1);
-                            emailReminder(res[x].email, res[x].date);
+                            emailReminder(res[x].name, res[x].email, res[x].date);
                         }else{
                             console.log("No Reservations at this or after the hour");
                         }
@@ -283,12 +285,15 @@ var schedule = require('node-schedule');
 
 /**
  * Initialization of Nodemailer Transporter Class
+ * To change provider, email address and password, 
+ * go to email_creds.js 
  */
+var credentials = require('./email_creds');
 var transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: credentials.provider, //email service
     auth: {
-        user: 'mikshaw01@gmail.com',
-        pass: 'Cornwall01'
+        user: credentials.user,//email address
+        pass: credentials.pass//email password
     }
 });
 
@@ -297,20 +302,46 @@ var transporter = nodemailer.createTransport({
  * This funtions send email to the specified address on the specified time if the server is running.
  * @return void
  */
-emailReminder = (email, date) => {
+emailReminder = (name, email, date) => {
     
     console.log("Remind:-");
     console.log("\n\n/////////////\nEmail: " + email + "\nDate: " + date);
-    date.setHours(parseInt(date.getHours()) - 1 + "");
-    console.log("Reminder Date: "+ date +"\n/////////////\n\n");
+    date = new Date(date);
+    let edate = new Date(date);
+    let hour = parseInt(date.getHours()) - 12;
+    edate.setHours(parseInt(edate.getHours()) - 1 + "");
+    console.log("Reminder Date: "+ edate +"\n/////////////\n\n");
     var mailOptions = {
-        from: 'mikshaw01@gmail.com',
+        from: '"RIU Jamaica Restaurants" <'+ credentials.user +'>',
         to: email,
-        subject: 'Testing th NodeJS Mail in a server',
-        text: 'That was easy!',
-        html: '<h1> Check this out!! </h1> <br> <a href="http://localhost:8888/guest">Click me</a>'
+        subject: 'Dinner Reminder',
+        html:   '<head>'
+                +'<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">'
+                +'</head>'
+                +'<body>'
+                +'<div class="container">'
+                +'<h1>RUI Jamaica Restaurants</h1>'
+                +'<p> Hello '+ name +', we just wanted to remind you of your dinner reservations at'+ hour +':' + date.getMinutes()+ 'pm today.</p>'
+                //+''+ date.getHours() - 12 + ':' + date.getMinutes() + 'pm today.</p>'
+                +'<footer class="page-footer">'
+                +'<div class="container" style="background-color: rgba(255,50,50,0.8);">'
+                +'<div class="row" >'
+                +'<div class="col l6 s12">'
+                +'<h4 class="amber-text">RIU Jamica Restaurants</h4>'
+                +'<p class="amber-text">The Web Application for presentation purposes.</p>'
+                +'</div>'
+                +'</div>'
+                +'</div>'
+                +'<div class="footer-copyright">'
+                +'<div class="container amber-text">'
+                +'© 2017 HTM MBCC'
+                +'</div>'
+                +'</div>'
+                +'</footer>'
+                +'</div>'
+                +'</body>'
     };
-    var j = schedule.scheduleJob(date, function() {
+    var j = schedule.scheduleJob(edate, function() {
         transporter.sendMail(mailOptions, function(error, info) {
             if (error) {
                 console.log(error);
