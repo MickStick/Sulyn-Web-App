@@ -337,6 +337,9 @@ $(document).ready(function() {
             if(!emVal.test($('.guest-form input[name="email"]').val())){ //Checks if email entered if a valid email address
                 $('#emResErr').text("Invalid Email, Chap!"); //Set Email Error
                 return false;
+            }else if(parseInt($('.guest-form input[name="time"]').val().split(':')[0]) < 18 || parseInt($('.guest-form input[name="time"]').val().split(':')[0]) > 21){
+                $('#setResErr').text("Dinner times are only between 6pm and 9pm");
+                return false;
             }
             let date = new Date($('.guest-form input[name="date"]').val());
             date.setHours($('.guest-form input[name="time"]').val().split(':')[0]);
@@ -378,6 +381,12 @@ $(document).ready(function() {
         
     });
 
+
+    /**
+     * Listens for get reservation button (hostess) click and sends guests name and reservation ticket
+     * then returns the reservation if it was found.
+     * @return false
+     */
     $('#host-btn').click(function(e) {
         e.preventDefault();
         var reserve = { // Stroes info from retreive table in a JSON object
@@ -402,10 +411,16 @@ $(document).ready(function() {
                 } else { //        
                     $('.hostess-form #resErr').text(data.msg); /////////////////////////////////////
                 }
-            }
+            } 
         });
     });
 
+
+    /**
+     * Listen to get reservation button (change table) click and sends guests name and reservation ticket
+     * then returns the reservation if it exists
+     * @return false
+     */
     $('#getSeatUp-btn').click(function(e) {
         e.preventDefault();
         var reserve = { // Stroes info from retreive table in a JSON object
@@ -465,6 +480,13 @@ $(document).ready(function() {
         });
     });
 
+
+    /**
+     * Listens for the guest number input field is unfocused.
+     * It checks the number of guests then ensures that only the tables that can 
+     * accomadate that amount are enabled.
+     * @return void
+     */
     $('.guest-form input[name="gNum"]').blur(function(){
         $('.guest-form input[name="seat"]').val("");
         console.log("Guest Num: "+$(this).val());
@@ -497,6 +519,15 @@ $(document).ready(function() {
     //     }
     // });
 
+
+    /**
+     * Listens for the changing of the date value.
+     * It checks if the time has been chosen, if not then the date value would be reset
+     * and the user would be prompted to choose a time first.
+     * If the time was chosen then the full Date+Time would be sent to the server to check
+     * for the tables that were available for that exact Date+Time.
+     * @return void
+     */
     $('.guest-form input[name="date"]').change(function() {
         if($('.guest-form input[name="time"]').val() == ""){
             $('.guest-form input[name="date"]').val("");
@@ -515,6 +546,7 @@ $(document).ready(function() {
                 success: function(data) {
                     $('#modal1 .col button').eq(x).removeClass("disabled");
                     $('.guest-form input[name="seat"]').val("");
+                    $('.guest-form #table').text("");
                     if (data.success) {
                         if(data.data != undefined ){
                             for(var x = 0; x < $('#modal1 .col button').length; x++){
@@ -536,6 +568,11 @@ $(document).ready(function() {
 
     });
 
+
+    /**
+     * Listens for the reservation time to be unfocused then resets date and table input values to null
+     * @return void
+     */
     $('.guest-form input[name="time"]').blur(function() {
         // console.log("time blurred");
         // var time = $(this).val().split(':');
@@ -543,9 +580,17 @@ $(document).ready(function() {
         //     console.log(time[x]);
         // }
         $('.guest-form input[name="date"]').val("");
+        $('.guest-form input[name="seat"]').val("");
+        $('.guest-form #table').text("");
 
     });
 
+
+    /**
+     * Listen for the update table button and sends over the new table and 
+     * the reservation ticket.
+     * @return false
+     */
     $('#UpseatBtn').click(function(e){
         e.preventDefault();
         if($('.seatUp-form input[name="seatUp"]').val() == ""){
