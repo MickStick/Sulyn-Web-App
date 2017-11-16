@@ -339,6 +339,8 @@ $(document).ready(function() {
             }else if(parseInt($('.guest-form input[name="time"]').val().split(':')[0]) < 18 || parseInt($('.guest-form input[name="time"]').val().split(':')[0]) > 21){
                 $('#setResErr').text("Dinner times are only between 6pm and 9pm");
                 return false;
+            }else if($('.guest-form .Err').text() != ""){
+                return false;
             }
             let date = new Date($('.guest-form input[name="date"]').val());
             date.setHours($('.guest-form input[name="time"]').val().split(':')[0]);
@@ -369,6 +371,7 @@ $(document).ready(function() {
                     $('.resConfirm-table #resEmail').text(reserve.email); // Calls confirmation view.
                     getView("#resConfirm"); // Sets reservation inputs to null. 
                     $('.guest-form input').val(""); /////////////////////////////////////
+                    $('.guest-form input[name="time"]').val("18:00");
                     console.log(data);
                 }
             });

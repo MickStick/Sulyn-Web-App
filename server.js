@@ -46,7 +46,7 @@ app.post('/reserve', urlcp, function(req, res, next) {
         }
 
         reservations = JSON.parse(data);
-        console.log("\n\n//////////////////\nDate set: "+req.body.date+"\n//////////////////\n\n");
+        console.log("\n\n//////////////////\nDate set: " + req.body.date + "\n//////////////////\n\n");
         reserveSet = {
             name: req.body.name,
             gNum: req.body.gNum,
@@ -68,7 +68,7 @@ app.post('/reserve', urlcp, function(req, res, next) {
         fs.writeFile('public/js/reserve.json', Data, function(err) {
             if (err) {
                 console.log(err);
-                res.json({success:false, msg:"Write File Error!"});
+                res.json({ success: false, msg: "Write File Error!" });
             }
             emailReminder(req.body.name, req.body.email, new Date(req.body.date));
         });
@@ -118,34 +118,34 @@ app.post('/tables', urlcp, function(req, res, next) {
             res.json({ success: false, msg: "File Error" });
         }
         let DATA = JSON.parse(data);
-        if(DATA.length < 1){
+        if (DATA.length < 1) {
             res.json({ success: true, msg: "No Reservations" });
-        }else{
+        } else {
             let tables = [];
-            for(var x = 0; x < DATA.length; x++){
+            for (var x = 0; x < DATA.length; x++) {
                 var d = new Date(DATA[x].date);
                 var D = d.getMonth() + " " + d.getDate() + ", " + d.getYear() + " ... " + d.getHours() + ":" + d.getMinutes();
                 var rd = new Date(req.body.date);
                 var RD = rd.getMonth() + " " + rd.getDate() + ", " + rd.getYear() + " ... " + rd.getHours() + ":" + rd.getMinutes();
                 console.log("d: " + D + "\nrd: " + RD);
-                if(D == RD){
+                if (D == RD) {
                     console.log("pushed");
                     tables.push(DATA[x].table);
-                    
-                }else{
+
+                } else {
                     console.log("tf!?!?");
                 }
             }
             console.log("tables: " + JSON.stringify(tables));
-            if(tables.length < 1){
+            if (tables.length < 1) {
                 res.json({ success: true, msg: "No Reservation on that date" });
-            }else{
+            } else {
                 res.json({ success: true, data: tables });
             }
-            
+
         }
-        
-        
+
+
     });
 
 
@@ -167,8 +167,8 @@ app.post('/UpTable', urlcp, function(req, res, next) {
 
         reservations = JSON.parse(data);
         var newRes = {};
-        for(var x = 0; x < reservations.length; x++){
-            if(reservations[x].reservationNum == req.body.ticket){
+        for (var x = 0; x < reservations.length; x++) {
+            if (reservations[x].reservationNum == req.body.ticket) {
                 reservations[x].table = req.body.newSeat;
                 newRes = reservations[x];
                 break;
@@ -180,7 +180,7 @@ app.post('/UpTable', urlcp, function(req, res, next) {
         fs.writeFile('public/js/reserve.json', Data, function(err) {
             if (err) {
                 console.log(err);
-                res.json({success:false, msg:"Write File Error!"});
+                res.json({ success: false, msg: "Write File Error!" });
             }
         });
         res.json({ success: "supmn", reserve: newRes });
@@ -225,52 +225,53 @@ emailOnRun = () => {
             return false;
         }
         var res = JSON.parse(data);
-        if(res.length > 0){
+        if (res.length > 0) {
             let date = new Date(Date());
-            for(var x = 0; x < res.length; x ++){
+            for (var x = 0; x < res.length; x++) {
                 rdate = new Date(res[x].date);
-                if(date.getMonth() + date.getDate() + date.getYear() == rdate.getMonth() + rdate.getDate() + rdate.getYear()){
+                if (date.getMonth() + date.getDate() + date.getYear() == rdate.getMonth() + rdate.getDate() + rdate.getYear()) {
                     // console.log("This hour: " + parseInt(date.getHours()));
                     // console.log("Res hour: " + parseInt(rdate.getHours()));
                     // console.log("This Minute: " + parseInt(date.getMinutes()));
                     // console.log("Res Minute: " + parseInt(rdate.getMinutes()));
-                    if(parseInt(rdate.getHours()) ==  parseInt(date.getHours()) ){
-                        if(parseInt(date.getMinutes()) - parseInt(rdate.getMinutes()) < 1){
+                    if (parseInt(rdate.getHours()) == parseInt(date.getHours())) {
+                        if (parseInt(date.getMinutes()) - parseInt(rdate.getMinutes()) < 1) {
                             let edate = new Date(res[x].date);
                             edate.setHours(parseInt(edate.getHours()) + 1);
-                            emailReminder(res[x].name, res[x].email, edate);emailReminder(res[x].name, res[x].email, res[x].date);
-                        }else{
-                            console.log("No Reservations at this or after the hour");
-                        }
-                        
-                    }else if(parseInt(rdate.getHours()) == parseInt(date.getHours()) + 1){
-                        if(parseInt(date.getMinutes()) - parseInt(rdate.getMinutes()) < 1){
+                            emailReminder(res[x].name, res[x].email, edate);
                             emailReminder(res[x].name, res[x].email, res[x].date);
-                        }else{
+                        } else {
                             console.log("No Reservations at this or after the hour");
                         }
-                    }else if(parseInt(rdate.getHours()) > parseInt(date.getHours())){
-                        if((parseInt(date.getMinutes()) - parseInt(rdate.getMinutes())) > -1 || parseInt(rdate.getMinutes()) >= parseInt(date.getMinutes())){
+
+                    } else if (parseInt(rdate.getHours()) == parseInt(date.getHours()) + 1) {
+                        if (parseInt(date.getMinutes()) - parseInt(rdate.getMinutes()) < 1) {
+                            emailReminder(res[x].name, res[x].email, res[x].date);
+                        } else {
+                            console.log("No Reservations at this or after the hour");
+                        }
+                    } else if (parseInt(rdate.getHours()) > parseInt(date.getHours())) {
+                        if ((parseInt(date.getMinutes()) - parseInt(rdate.getMinutes())) > -1 || parseInt(rdate.getMinutes()) >= parseInt(date.getMinutes())) {
                             // var eDate = new Date(res[x].date);
                             // eDate.setHours(rdate.getHours() - 1);
                             emailReminder(res[x].name, res[x].email, res[x].date);
-                        }else{
+                        } else {
                             console.log("No Reservations at this or after the hour");
                         }
-                    }else{
+                    } else {
                         console.log("No Reservations at this or after the hour");
                     }
-                    
-                }else{
+
+                } else {
                     console.log("No Reservations for Today");
                 }
-                
+
             }
-        }else{
+        } else {
             console.log("No Reservations...");
         }
     });
-    
+
 }
 
 
@@ -292,8 +293,8 @@ var credentials = require('./email_creds');
 var transporter = nodemailer.createTransport({
     service: credentials.provider, //email service
     auth: {
-        user: credentials.user,//email address
-        pass: credentials.pass//email password
+        user: credentials.user, //email address
+        pass: credentials.pass //email password
     }
 });
 
@@ -303,43 +304,44 @@ var transporter = nodemailer.createTransport({
  * @return void
  */
 emailReminder = (name, email, date) => {
-    
+
     console.log("Remind:-");
     console.log("\n\n/////////////\nEmail: " + email + "\nDate: " + date);
     date = new Date(date);
     let edate = new Date(date);
     let hour = parseInt(date.getHours()) - 12;
     edate.setHours(parseInt(edate.getHours()) - 1 + "");
-    console.log("Reminder Date: "+ edate +"\n/////////////\n\n");
+    console.log("Reminder Date: " + edate + "\n/////////////\n\n");
     var mailOptions = {
-        from: '"RIU Jamaica Restaurants" <'+ credentials.user +'>',
+        from: '"RIU Jamaica Restaurants" <' + credentials.user + '>',
         to: email,
         subject: 'Dinner Reminder',
-        html:   '<head>'
-                +'<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">'
-                +'</head>'
-                +'<body>'
-                +'<div class="container">'
-                +'<h1>RUI Jamaica Restaurants</h1>'
-                +'<p> Hello '+ name +', we just wanted to remind you of your dinner reservations at'+ hour +':' + date.getMinutes()+ 'pm today.</p>'
-                //+''+ date.getHours() - 12 + ':' + date.getMinutes() + 'pm today.</p>'
-                +'<footer class="page-footer">'
-                +'<div class="container" style="background-color: rgba(255,50,50,0.8);">'
-                +'<div class="row" >'
-                +'<div class="col l6 s12">'
-                +'<h4 class="amber-text">RIU Jamica Restaurants</h4>'
-                +'<p class="amber-text">The Web Application for presentation purposes.</p>'
-                +'</div>'
-                +'</div>'
-                +'</div>'
-                +'<div class="footer-copyright">'
-                +'<div class="container amber-text">'
-                +'© 2017 HTM MBCC'
-                +'</div>'
-                +'</div>'
-                +'</footer>'
-                +'</div>'
-                +'</body>'
+        html: '<head>' +
+            '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">' +
+            '</head>' +
+            '<body>' +
+            '<div class="container">' +
+            '<h1>RUI Jamaica Restaurants</h1>' +
+            '<p> Hello ' + name + ', we just wanted to remind you of your dinner reservations at ' + hour + ':' + date.getMinutes() + 'pm today.</p>'
+            //+''+ date.getHours() - 12 + ':' + date.getMinutes() + 'pm today.</p>'
+            +
+            '<footer class="page-footer">' +
+            '<div class="container" style="background-color: rgba(255,50,50,0.8);">' +
+            '<div class="row" >' +
+            '<div class="col l6 s12">' +
+            '<h4 class="amber-text">RIU Jamica Restaurants</h4>' +
+            '<p class="amber-text">The Web Application for presentation purposes.</p>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '<div class="footer-copyright">' +
+            '<div class="container amber-text">' +
+            '© 2017 HTM MBCC' +
+            '</div>' +
+            '</div>' +
+            '</footer>' +
+            '</div>' +
+            '</body>'
     };
     var j = schedule.scheduleJob(edate, function() {
         transporter.sendMail(mailOptions, function(error, info) {
