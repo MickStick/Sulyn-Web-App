@@ -4,6 +4,8 @@ $(document).ready(function() {
     $('.carousel.carousel-slider').carousel({fullWidth: true});
     $('.carousel').carousel();
 
+    $('select').material_select();
+
     $(".button-collapse").sideNav(); //Initiaize button for mobile menu show/hide
     Materialize.updateTextFields();
 
@@ -317,7 +319,7 @@ $(document).ready(function() {
      */
     const resIsFilled = () => {
         for(var x = 0; x < $('.guest-form input').length; x++){
-            if($('.guest-form input').eq(x).val() == "" || $('.guest-form input').eq(x).val() == null){
+            if($('.guest-form input').eq(x).val() == "" || $('.guest-form input').eq(x).val() == null || $('.guest-form select').eq(x).val() == "" || $('.guest-form select').eq(x).val() == null){
                 return false;
             }
         }
@@ -350,6 +352,7 @@ $(document).ready(function() {
                 rNum: $('.guest-form input[name="rNum"]').val(),
                 gNum: $('.guest-form input[name="gNum"]').val(),
                 time: $('.guest-form input[name="time"]').val(),
+                restaurants:$('.guest-form select[name="restaurants"]').val(),
                 date: date,
                 seat: $('.guest-form input[name="seat"]').val(),
                 email: $('.guest-form input[name="email"]').val()
@@ -534,6 +537,9 @@ $(document).ready(function() {
         if($('.guest-form input[name="time"]').val() == ""){
             $('.guest-form input[name="date"]').val("");
             $('#dateErr').text("Please Choose a Time");
+        }else if($('.guest-form select[name="restaurants"]').val() == ""){
+            $('.guest-form input[name="date"]').val("");
+            $('#dateErr').text("Please Choose a Restaurant");
         }else{
             $('#dateErr').text("");
             
@@ -544,7 +550,9 @@ $(document).ready(function() {
             $.ajax({
                 type: 'POST', ///////////////////////////////////////////
                 url: '/tables', // Send info to server to be processed
-                data: {date:D}, ///////////////////////////////////////////
+                data: {date:D, 
+                    rest: $('.guest-form select[name="restaurants"]').val()
+                }, ///////////////////////////////////////////
                 success: function(data) {
                     $('#modal1 .col button').eq(x).removeClass("disabled");
                     $('.guest-form input[name="seat"]').val("");

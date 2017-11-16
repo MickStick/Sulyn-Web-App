@@ -51,6 +51,7 @@ app.post('/reserve', urlcp, function(req, res, next) {
             name: req.body.name,
             gNum: req.body.gNum,
             rNum: req.body.rNum,
+            rest: req.body.restaurant,
             time: req.body.time,
             date: new Date(req.body.date),
             table: req.body.seat,
@@ -128,13 +129,13 @@ app.post('/tables', urlcp, function(req, res, next) {
                 var rd = new Date(req.body.date);
                 var RD = rd.getMonth() + " " + rd.getDate() + ", " + rd.getYear() + " ... " + rd.getHours() + ":" + rd.getMinutes();
                 console.log("d: " + D + "\nrd: " + RD);
-                if (D == RD) {
-                    console.log("pushed");
-                    tables.push(DATA[x].table);
-
-                } else {
-                    console.log("tf!?!?");
+                if(DATA[x].rest == req.body.rest){
+                    if (D == RD) {
+                        console.log("pushed");
+                        tables.push(DATA[x].table);
+                    }
                 }
+                
             }
             console.log("tables: " + JSON.stringify(tables));
             if (tables.length < 1) {
