@@ -190,6 +190,54 @@ app.post('/UpTable', urlcp, function(req, res, next) {
 
 
 /**
+ * POST function that receives specific reservation data then overwrites specified
+ * resrvation with empty strings to henceforth cancel the resrvation.
+ * @return JSON Object with success and message or data
+ */
+app.post('/cancel', urlcp, (req, res, next) => {
+    fs.readFile('public/js/reserve.json', function(err, data) {
+        if (err) {
+            console.log(err);
+            res.json({ success: false });
+        }
+
+        reservations = JSON.parse(data)
+        var cancel = false;
+        for (var x = 0; x < reservations.length; x++) {
+            if (reservations[x].reservationNum == req.body.ticket && reservations[x].name == req.body.name && reservations[x].rNum == req.body.room) {
+                reservations[x].name = "";
+                reservations[x].gNum = "";
+                reservations[x].rNum = "";
+                reservations[x].rest = "";
+                reservations[x].time = "";
+                reservations[x].date = "";
+                reservations[x].table = "";
+                reservations[x].email = "";
+                cancel = true;
+                break;
+            }
+        }
+        if(!cancel){
+            res.json({ success: false, emsg: "Reservation Not Found"});
+            return true;
+        }
+        
+        DATA = JSON.stringify(reservations);
+        Data = DATA.split(",");
+        console.log(Data);
+        // console.log(Data);
+        fs.writeFile('public/js/reserve.json', DATA, function(err) {
+            if (err) {
+                console.log(err);
+                res.json({ success: false, msg: "Write File Error!" });
+            }
+        });
+        res.json({ success: "supmn", msg: "Recervation Canceled"});
+    });
+});
+
+
+/**
  * Main GET request which manages all GET route request and sends index file
  * @return void
  */
@@ -206,7 +254,7 @@ app.get('*', function(req, res, next) {
  */
 function findReservation(Res, data) {
     for (x = 0; x < data.length; x++) {
-        if (Res.name == data[x].name && Res.ticket == parseInt(data[x].reservationNum)) {
+        if (Res.name == data[x].name && Res.ticket == parseInt(data[x].reservationNum) && Res.room == data[x].rNum) {
             return data[x];
         }
     }

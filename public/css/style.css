@@ -82,6 +82,18 @@ input:focus~label {
     background-color: teal !important;
 }
 
+.card-alert {
+    padding-top: 1mm !important;
+    padding-bottom: 1mm !important;
+}
+
+.alert-content {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 1mm !important;
+    margin-bottom: 1mm !important;
+}
+
 .input-field label {
     font-size: 18px !important;
 }

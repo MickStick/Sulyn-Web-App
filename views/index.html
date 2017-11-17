@@ -130,6 +130,14 @@ Hostess:
 		</header>
 		
 		<div class="container red-text">
+			<!--Reservation Cancel Message-->
+			<div id="card-alert" class="card-alert card orange lighten-5" style="display: none">
+					<div class="alert-content card-content orange-text">
+						<p>Reservation Deleted!</p>
+					</div>            
+				</div>
+			<!--Reservation Cancel Message-->
+
 			<!-- Home View Container -->
 			<div hidden class="home view" id="home">
 				<h1 class="center">RIU Jamaica Reservation Portal</h1>
@@ -281,6 +289,12 @@ Hostess:
 					<p id="setResErr" class="Err"></p>
 					<div class="right">
 						<a href="/guests-seatupd" class="route btn-flat red lighten-4 waves-effect waves-red" title="Edit previous reservation table">Change table?</a>
+						<ul>
+							<li>
+								<a href="/guests-cancel" class="route btn-flat red accent-3 waves-effect waves-red right" title="Edit previous reservation table">Cancel</a>
+							</li>
+						</ul>
+						
 					</div>
 					<div class="left">
 						<button class="btn red" type="submit" id="guest-btn">Set Reservation</button>
@@ -291,6 +305,31 @@ Hostess:
 				<br><br>
 			</div>
 			<!-- Guest Reservation View Container -->
+
+			<!-- Guest Cancel Reservation View Container -->
+			<div hidden class="guests/cancel view" id="guests-cancel">
+				<form class="cancel-form">
+					<h3>Cancel Your Reservation</h3>
+					<div class="input-field">
+						<input type="text" name="name" id="" placeholder="John Doe">
+						<label for="name">Guest Name</label>
+					</div>
+					<div class="input-field">
+						<input type="text" name="ticket" id="" placeholder="XXXX">
+						<label for="ticket">Reservation Ticket</label>
+					</div>
+					<div class="input-field">
+						<input type="text" name="rNum" id="" placeholder="XXXX">
+						<label for="rNum">Room Number</label>
+					</div>
+					<div>
+						<label id="cancelErr" class="Err"></label>
+					</div>
+					<button class="btn red" id="cancel-btn">Cancel Reservation</button>
+
+				</form>
+			</div>
+			<!-- Guest Cancel Reservation View Container -->
 			
 			<!-- Guest Change Seat Get Reservation View Container -->
 			<div hidden class="guests/seatup view" id="guests-seatupd">
@@ -303,6 +342,10 @@ Hostess:
 					<div class="input-field">
 						<input type="text" name="ticket" id="" placeholder="XXXX">
 						<label for="ticket">Reservation Ticket</label>
+					</div>
+					<div class="input-field">
+						<input type="text" name="rNum" id="" placeholder="XXXX">
+						<label for="rNum">Room Number</label>
 					</div>
 					<div>
 						<label id="seatUpErr" class="Err"></label>
@@ -397,6 +440,10 @@ Hostess:
 					<div class="input-field">
 						<input type="text" name="ticket" id="" placeholder="XXXX">
 						<label for="ticket">Reservation Ticket</label>
+					</div>
+					<div class="input-field">
+						<input type="text" name="rNum" id="" placeholder="XXX">
+						<label for="rNum">Room Number</label>
 					</div>
 					<div>
 						<label id="resErr" class="Err"></label>

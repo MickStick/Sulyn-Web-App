@@ -6,6 +6,9 @@ $(document).ready(function() {
 
     $('select').material_select();
 
+    $('.fixed-action-btn').openFAB();
+    $('.fixed-action-btn').closeFAB();
+
     $(".button-collapse").sideNav(); //Initiaize button for mobile menu show/hide
     Materialize.updateTextFields();
 
@@ -276,6 +279,12 @@ $(document).ready(function() {
         
         e.preventDefault();
         let route = $(this);
+        $('input').val("");
+        $('select').val("");
+        $('.Err').text("");
+        $('.guest-form input[name="time"]').val("18:00");
+        $('#table').text("");
+        $('#tableUp').text("");
         $('.progress').show("fast",function(){
             if (route.attr("href") == "/logout") {
                 onLogout();
@@ -319,9 +328,12 @@ $(document).ready(function() {
      */
     const resIsFilled = () => {
         for(var x = 0; x < $('.guest-form input').length; x++){
-            if($('.guest-form input').eq(x).val() == "" || $('.guest-form input').eq(x).val() == null || $('.guest-form select').eq(x).val() == "" || $('.guest-form select').eq(x).val() == null){
+            if($('.guest-form input').eq(x).val() == "" || $('.guest-form input').eq(x).val() == null){
                 return false;
             }
+        }
+        if($('.guest-form select').val() == "" || $('.guest-form select').val() == null){
+            return false;
         }
         return true;
     }
@@ -340,8 +352,6 @@ $(document).ready(function() {
                 return false;
             }else if(parseInt($('.guest-form input[name="time"]').val().split(':')[0]) < 18 || parseInt($('.guest-form input[name="time"]').val().split(':')[0]) > 21){
                 $('#setResErr').text("Dinner times are only between 6pm and 9pm");
-                return false;
-            }else if($('.guest-form .Err').text() != ""){
                 return false;
             }
             let date = new Date($('.guest-form input[name="date"]').val());
@@ -367,7 +377,7 @@ $(document).ready(function() {
                     $('.resConfirm-table #resName').text(reserve.name);
                     $('.resConfirm-table #resrNum').text(reserve.rNum);
                     $('.resConfirm-table #resgNum').text(reserve.gNum); ///////////////////////////////////////
-                    $('.resConfirm-table #resRest').text(reserve.restaurant); //
+                    $('.resConfirm-table #resRest').text(reserve.restaurants); //
                     $('.resConfirm-table #resTime').text(reserve.time); // Receives response containing data.
                     $('.resConfirm-table #resDate').text(reserve.date); // Sets confirmation fields.
                     $('.resConfirm-table #resSeat').text(reserve.seat); //
@@ -375,6 +385,7 @@ $(document).ready(function() {
                     getView("#resConfirm"); // Sets reservation inputs to null. 
                     $('.guest-form input').val(""); /////////////////////////////////////
                     $('.guest-form input[name="time"]').val("18:00");
+                    $('#table').text("");
                     console.log(data);
                 }
             });
@@ -396,7 +407,8 @@ $(document).ready(function() {
         e.preventDefault();
         var reserve = { // Stroes info from retreive table in a JSON object
             name: $('.hostess-form input[name="name"]').val(),
-            ticket: $('.hostess-form input[name="ticket"]').val()
+            ticket: $('.hostess-form input[name="ticket"]').val(), 
+            room: $('.hostess-form input[name="rNum"]').val()
         };
         $.ajax({
             type: 'POST', ///////////////////////////////////////////
@@ -430,7 +442,8 @@ $(document).ready(function() {
         e.preventDefault();
         var reserve = { // Stroes info from retreive table in a JSON object
             name: $('.getSeat-form input[name="name"]').val(),
-            ticket: $('.getSeat-form input[name="ticket"]').val()
+            ticket: $('.getSeat-form input[name="ticket"]').val(),
+            room: $('.getSeat-form input[name="rNum"]').val()
         };
         
         $.ajax({
@@ -475,11 +488,46 @@ $(document).ready(function() {
                             getView("/guest-seatup-update"); // Calls retreived  view.
                             $('.getSeat-form #seatUpErr').text(""); // Sets retireive  inputs to null.
                             $('.getSeat-form input').val(""); // Sets error message to null
+                            $('#tableUp').text("");
                         }
                     });
                     
                 } else { //        
                     $('.getSeat-form #seatUpErr').text(data.msg); /////////////////////////////////////
+                }
+            }
+        });
+    });
+
+
+    /**
+     * Listens for cancel reservation button click
+     * Sends over reservation info to cancel a reservation.
+     * @returns false
+     */
+    $('#cancel-btn').click(function(e){
+        e.preventDefault();
+        var reserve = { // Stroes info from retreive table in a JSON object
+            name: $('.cancel-form input[name="name"]').val(),
+            ticket: $('.cancel-form input[name="ticket"]').val(),
+            room: $('.cancel-form input[name="rNum"]').val()
+        };
+        
+        $.ajax({
+            type: 'POST', ///////////////////////////////////////////
+            url: '/cancel', // Send info to server to be processed
+            data: reserve, ///////////////////////////////////////////
+            success: function(data){
+                if(data.success){
+                    setHidden();
+                    getView("/home");
+                    $('#cancelErr').text("");
+                    $('.cencel-form input').val("");
+                    $('#card-alert').show().delay(2500).fadeOut();
+                }else{
+                    if(data.emsg != undefined){
+                        $('#cancelErr').text(data.emsg);
+                    }
                 }
             }
         });
