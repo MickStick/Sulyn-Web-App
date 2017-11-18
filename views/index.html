@@ -57,7 +57,9 @@ Hostess:
 			// if( window.location.pathname.match(/\//g).length > 1){
 			// 	window.location.pathname = "/";
 			// }
-			if((/^\/guests/).test(window.location.pathname) && window.location.pathname.match(/\//g).length > 1){
+			if((/^cancel/).test(window.location.pathname)){
+				window.location.pathname = "/guests-cancel";
+			}else if((/^\/guests/).test(window.location.pathname) && window.location.pathname.match(/\//g).length > 1){
 				window.location.pathname = "/guests";
 			}else if((/^\/guests/).test(window.location.pathname)){
 
@@ -230,6 +232,7 @@ Hostess:
 							min="18:30"
 							max="21:00"
 							value="18:30">
+							<p id="timeErr" class="Err"></p>
 					</div>
 					<div class="input-field">
 						<!-- <label for="date">Date</label> -->

@@ -126,7 +126,7 @@ $(document).ready(function() {
      * Array of recognized routes.
      * These routes are the only routes that are allowed onLoad or onReload
      */
-    const routes = ["/","/guests","/login","/hostess"];
+    const routes = ["/","/guests","/login","/hostess","/guests-cancel"];
 
 
     /**
@@ -202,8 +202,12 @@ $(document).ready(function() {
             onLogout();
         } else if(window.location.pathname == "/guest/seatup-update" || window.location.pathname == "/guests-seatupd" || window.location.pathname == "/guests/seatup-update" || window.location.pathname == "/guest-seatupd"){
             getView("/guests");
-        } else if(!isRoute(window.location.pathname)){
+        } 
+        else if(!isRoute(window.location.pathname)){
             getView("/home");
+        }
+        else if(window.location.pathname == "/guest#guests"){
+            getView("/guests-cancel");
         }else {
             getView(window.location.pathname);
         }
@@ -350,10 +354,11 @@ $(document).ready(function() {
             if(!emVal.test($('.guest-form input[name="email"]').val())){ //Checks if email entered if a valid email address
                 $('#emResErr').text("Invalid Email, Chap!"); //Set Email Error
                 return false;
-            }else if(parseInt($('.guest-form input[name="time"]').val().split(':')[0]) < 18 || parseInt($('.guest-form input[name="time"]').val().split(':')[0]) > 21){
-                $('#setResErr').text("Dinner times are only between 6pm and 9pm");
-                return false;
             }
+            // else if(parseInt($('.guest-form input[name="time"]').val().split(':')[0]) < 18 || parseInt($('.guest-form input[name="time"]').val().split(':')[0]) > 21){
+            //     $('#setResErr').text("Dinner times are only between 6pm and 9pm");
+            //     return false;
+            // }
             let date = new Date($('.guest-form input[name="date"]').val());
             date.setHours($('.guest-form input[name="time"]').val().split(':')[0]);
             date.setMinutes($('.guest-form input[name="time"]').val().split(':')[1]);
@@ -630,18 +635,12 @@ $(document).ready(function() {
     /**
      * Listens for the reservation time to be unfocused then resets date and table input values to null
      * @return void
-     */
+     */    
     $('.guest-form input[name="time"]').blur(function() {
-        // console.log("time blurred");
-        // var time = $(this).val().split(':');
-        // for (x = 0; x < time.length; x++) {
-        //     console.log(time[x]);
-        // }
         $('.guest-form input[name="date"]').val("");
         $('.guest-form input[name="seat"]').val("");
-        $('.guest-form #table').text("");
-
     });
+    
 
 
     /**
