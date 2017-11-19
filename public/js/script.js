@@ -118,6 +118,10 @@ $(document).ready(function() {
         { /////////////////////////////
             name: "David Rhoden",
             password: "pavt3c"
+        }, 
+        { 
+            name: "Shanique Malcom",
+            password: "mal1234"
         }
     ];
 
