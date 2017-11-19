@@ -16,7 +16,9 @@
     "express-vhost": "^0.2.0",
     "node-schedule": "^1.2.5",
     "nodemailer": "^4.2.0",
-    "vhost": "^3.0.2"
+    "vhost": "^3.0.2",
+    "email-templates": "^2.7.1",
+    "bluebird":"^3.5.1"
   },
   "devDependencies": {},
   "repository": {
