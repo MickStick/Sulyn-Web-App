@@ -52,7 +52,7 @@ app.post('/reserve', urlcp, function(req, res, next) {
             name: req.body.name,
             gNum: req.body.gNum,
             rNum: req.body.rNum,
-            rest: req.body.restaurant,
+            rest: req.body.restaurants,
             time: req.body.time,
             date: new Date(req.body.date),
             table: req.body.seat,
@@ -73,7 +73,7 @@ app.post('/reserve', urlcp, function(req, res, next) {
                 res.json({ success: false, msg: "Write File Error!" });
             }
             //emailReminder(req.body.name, req.body.email, req.body.restaurant, new Date(req.body.date));
-            email(req.body.name, req.body.email, req.body.restaurant, new Date(req.body.date));
+            email(req.body.name, req.body.email, req.body.restaurants, new Date(req.body.date));
         });
         res.json({ success: "supmn", ticket: reserveSet.reservationNum });
     });
