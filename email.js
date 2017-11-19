@@ -6,6 +6,9 @@ transporter = nodemailer.createTransport({
     auth: {
         user: credentials.user, //email address
         pass: credentials.pass //email password
+    },
+    tls: {
+        rejectUnauthorized: false
     }
 }),
 EmailTemplate = require('email-templates').EmailTemplate,
