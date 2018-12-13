@@ -30,7 +30,7 @@ If it's being used by the hostess:
 
 This web application is made with a **Node JS** and **Express** server-side/back-end. The back-end utilizes simple server-client requests and responses. It also utilizes a file system for storing reservation data. The **Nodemailer** and **Node-Schedule** modules were also utilized to create and implement an email reminder system.
 
-The front-end is made with **HTML5**, **CSS3**, **JavaScript** and **JQuery**. **HTML5** and **CSS3** for the UI design while the **Javascript**/**JQuery** is used for server-client communication. The web app responsiveness is also taken cared of by using plain out Vanilla **Javascript**.
+The front-end is made with **HTML5**, **CSS3**, **JavaScript** and **JQuery**. **HTML5** and **CSS3** for the UI design while the **Javascript**/**JQuery** is used for server-client communication. The web app responsiveness is also taken cared of by using plain old Vanilla **Javascript**.
 
 ### How-To-Use
 
@@ -54,4 +54,4 @@ To find out more on the **Express** framework you may visit their [homepage](htt
 
 To find out more on the **Nodemailer** framework you may visit their [package](https://www.npmjs.com/package/nodemailer "Nodemailer NPM package page") page on **NPM**.
 
-To find out more on the **Node-Schedule** framework you may visit their [package](https://www.npmjs.com/package/node-schedule"Node-Schedule NPM package page") page on **NPM**.
+To find out more on the **Node-Schedule** framework you may visit their [package](https://www.npmjs.com/package/node-schedule "Node-Schedule NPM package page") page on **NPM**.
