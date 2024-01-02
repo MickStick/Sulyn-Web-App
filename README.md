@@ -1,57 +1,34 @@
-# Sulyn-Web-App
-Web App for her class
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## The RIU Customer Registration Web Application
+## Getting Started
 
-The basic web application should allow customers to make dinner reservations and make adjustments afterwards. It should also allow hostess login then allow for the retreival of customer reservations.
+First, run the development server:
 
-If it's being used by a guest:
--	Enter name 
--	Room number 
--	Number of persons 
--	A virtual seating arrangement so that 
-	the guest can select where to sit (minimum of 2 seats 
-	and maximum of 4 seats)
--	Time of dinner
--	An alarm to remind them 1 hour before dinner 
--	Option to cancel reservation
--	Date of dinner
--	Option to change time of dinner, if its available 
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-If it's being used by the hostess:
--	Enter guest room number to verify their reservation.
--	Hostess can see where the guest chooses to sit.
--	the time of the dinner 
--	number of persons
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
----
+You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-## The Web Application
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-This web application is made with a **Node JS** and **Express** server-side/back-end. The back-end utilizes simple server-client requests and responses. It also utilizes a file system for storing reservation data. The **Nodemailer** and **Node-Schedule** modules were also utilized to create and implement an email reminder system.
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-The front-end is made with **HTML5**, **CSS3**, **JavaScript** and **JQuery**. **HTML5** and **CSS3** for the UI design while the **Javascript**/**JQuery** is used for server-client communication. The web app responsiveness is also taken cared of by using plain old Vanilla **Javascript**.
+## Learn More
 
-### How-To-Use
+To learn more about Next.js, take a look at the following resources:
 
-> Clone Repository
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-> Open Ropository folder in terminal (Go into the folder then **shift + right click**)
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-> In the terminal run code "npm install"
+## Deploy on Vercel
 
-> In the terminal run code "npm start" to start the server
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-> In your browser, goto http://localhost:8888/
-
-> Enjoy
-
-### Read More
-
-To find out more about **Node JS** you visit the [documentation](https://nodejs.org/en/docs/ "Node JS Documentation") and you can also learn of **Node Package Manager (NPM)** [here.](https://www.npmjs.com/ "NPM Home").
-
-To find out more on the **Express** framework you may visit their [homepage](https://expressjs.com/ "Express JS Home").
-
-To find out more on the **Nodemailer** framework you may visit their [package](https://www.npmjs.com/package/nodemailer "Nodemailer NPM package page") page on **NPM**.
-
-To find out more on the **Node-Schedule** framework you may visit their [package](https://www.npmjs.com/package/node-schedule "Node-Schedule NPM package page") page on **NPM**.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

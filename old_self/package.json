@@ -1,0 +1,36 @@
+{
+  "name": "riu-reservation-system",
+  "version": "1.0.0",
+  "description": "A simple system for setting and managing dinner reservations",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm start",
+    "start": "node server.js"
+  },
+  "author": "Me",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "email-templates": "^2.7.1",
+    "express": "^4.16.2",
+    "express-vhost": "^0.2.0",
+    "handlebars": "^4.0.11",
+    "node-schedule": "^1.2.5",
+    "nodemailer": "^4.2.0",
+    "vhost": "^3.0.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MickStick/Sulyn-Web-App.git"
+  },
+  "keywords": [
+    "RIU"
+  ],
+  "bugs": {
+    "url": "https://github.com/MickStick/Sulyn-Web-App/issues"
+  },
+  "homepage": "https://github.com/MickStick/Sulyn-Web-App#readme"
+}
